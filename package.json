@@ -1,0 +1,90 @@
+{
+  "name": "component-maker",
+  "displayName": "Component Maker",
+  "description": "Generates necessary files for new components, does not depend on any language, framework",
+  "author": {
+    "name": "Ar-mane",
+    "email": "abderrahmane.arache@gmail.com",
+    "url": "https://github.com/Ar-mane"
+  },
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "react",
+    "next",
+    "vite",
+    "plop",
+    "plop",
+    "component",
+    "maker",
+    "generator",
+    "javascript",
+    "typescript"
+  ],
+  "publisher": "Ar-mane",
+  "activationEvents": [
+    "onCommand:extension.makeComponent"
+  ],
+  "main": "./dist/extension.js",
+  "icon": "assets/images/icon.png",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.makeComponent",
+        "title": "🦯 Make Component"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.makeComponent",
+          "group": "navigation@1"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "extension.makeComponent",
+          "group": "0_workspace"
+        }
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ar-mane/component-maker"
+  },
+  "homepage": "https://github.com/Ar-mane/component-maker",
+  "license": "MIT",
+  "scripts": {
+    "vscode:prepublish": "pnpm package",
+    "compile": "webpack --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
+    "watch": "webpack --watch --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
+    "package": "webpack --mode production --config ./build/node-extension.webpack.config.js",
+    "test-compile": "tsc -p ./",
+    "test-watch": "tsc -watch -p ./",
+    "pretest": "pnpm test-compile && pnpm lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "vs-package": "vsce package --no-dependencies",
+    "vs-publish": "vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@types/vscode": "^1.73.1",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
+    "eslint": "^8.28.0",
+    "prettier": "2.8.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.9.3",
+    "vsce": "^2.14.0",
+    "vscode-test": "^1.6.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  }
+}

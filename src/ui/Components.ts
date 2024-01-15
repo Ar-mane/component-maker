@@ -1,13 +1,15 @@
-import { Uri, window } from "vscode";
+import { defaultConfig } from "@/config/config";
+import { Config } from "@/config/types";
 import {
+  DEFAULT_COMPONENT_CONTENT,
   NO_CONFIG_ACTIONS_CREATE,
   NO_CONFIG_ACTIONS_DEFAULT,
   NO_CONFIG_FOUND_MESSAGE,
 } from "@/constants/Constants";
 import { writeFile } from "@/utility/fileUtility";
 import { log } from "@/utility/logger";
-import { Config } from "@/config/types";
-import { defaultConfig } from "@/config/config";
+import { Uri, window } from "vscode";
+import path = require("path");
 
 export const showNoConfigFileExistPrompt = async (
   uri: Uri
@@ -24,7 +26,12 @@ export const showNoConfigFileExistPrompt = async (
 const makeConfigurationOption = (uri: Uri, choice: string) => {
   switch (choice) {
     case NO_CONFIG_ACTIONS_CREATE:
+      const templateFolderUri = Uri.file(
+        path.dirname(uri.fsPath) +
+          `/${defaultConfig.templateFolder}/${defaultConfig.templateComponentName}/${defaultConfig.templateComponentName}.ts`
+      );
       writeFile(uri, JSON.stringify(defaultConfig, null, 3));
+      writeFile(templateFolderUri, DEFAULT_COMPONENT_CONTENT);
       break;
 
     default:

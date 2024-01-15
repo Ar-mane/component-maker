@@ -7,6 +7,7 @@ import {
   tryToReadDirectory,
 } from "@/utility/fileUtility";
 import { posix } from "path";
+import path = require("path");
 import { Uri, workspace } from "vscode";
 
 export const getProperConfig = async (): Promise<Config> => {
@@ -23,15 +24,11 @@ export const getProperConfig = async (): Promise<Config> => {
   }
 };
 export async function folderWhereToCreateComponent(uri: Uri) {
-  const { path } = uri;
-  if (await tryToReadDirectory(path)) {
-    return path;
+  if (await tryToReadDirectory(uri.path)) {
+    return uri.path;
   }
-  // its a file
-  // removing fileName
-  const pathArray = path.split("/");
-  pathArray.pop();
-  return pathArray.join("/");
+
+  return path.dirname(uri.fsPath);
 }
 
 export const generateUriFromRootFilename = (fileName: string): Uri => {

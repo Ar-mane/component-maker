@@ -1,6 +1,7 @@
 import { Uri, workspace } from "vscode";
 import { Config } from "@/config/types";
 import { generateUriFromRootFilename } from "./utility";
+import path = require("path");
 
 export async function writeFile(uri: Uri, content: string) {
   return workspace.fs.writeFile(uri, new Uint8Array(Buffer.from(content)));

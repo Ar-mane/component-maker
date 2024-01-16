@@ -1,7 +1,7 @@
 import { LOG_STARTING, MC_MAIN_CMD } from "@/constants/Constants";
 import { makeComponent } from "@/main";
 import { log } from "@/utility/logger";
-import { commands, ExtensionContext, Uri } from "vscode";
+import { ExtensionContext, Uri, commands } from "vscode";
 
 export function deactivate() {}
 

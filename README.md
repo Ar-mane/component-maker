@@ -3,7 +3,7 @@
 A VS Code extension for generating new component files depending on your custom template
 no **framework** or **language** dependencies, this documentation is done by **react/typescript**, but it also works with **any other technology**.
 
-Right click in the file editor or on a file in the explorer and click `🦯Make Component` to generate a component as needed
+Right click in the file editor or on a file in the explorer and click `📐Make Component` to generate a component as needed
 
 ![image](https://user-images.githubusercontent.com/46249965/204175708-1b02f881-87ef-4f4b-aeaf-2fb37fde1891.png)
 

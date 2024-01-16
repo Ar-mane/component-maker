@@ -1,8 +1,26 @@
-export const log = (message: any, ...items: any): void => {
-  // replace it by some Logger class
-  console.log(message, items);
-};
-export const error = (message: any, ...items: any): void => {
-  // replace it by some Logger class
-  console.error(message, items);
-};
+import * as vscode from "vscode";
+
+class Logger {
+  private static instance: Logger;
+  private logger: vscode.OutputChannel;
+
+  private constructor() {
+    this.logger = vscode.window.createOutputChannel("[ Component Maker ]");
+  }
+
+  public static getInstance(): Logger {
+    if (!Logger.instance) {
+      Logger.instance = new Logger();
+    }
+
+    return Logger.instance;
+  }
+
+  public log(message: any): void {
+    this.logger.appendLine(message);
+  }
+}
+export function log(message: any) {
+  Logger.getInstance().log(message);
+}
+export default Logger;

@@ -3,5 +3,8 @@
         "activityBar.background": "#1c5703",
         "titleBar.activeBackground": "#66be00",
         "titleBar.activeForeground": "#FFFBFD"
-    }
+    },
+    "conventionalCommits.scopes": [
+        "logger"
+    ]
 }

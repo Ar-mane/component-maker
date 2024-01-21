@@ -1,0 +1,18 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Ar-mane/component-maker/branch-3/src/json-schema.json",
+    "templateFolder":".templates",
+    "templates":[
+      {
+        "label":"📄 add component",
+        "detail":"to create a complete next component",
+        "rootFolder":"component",
+        "variable":"_ComponentName_"
+      },
+      {
+        "label":"🗃️ add service",
+        "detail":"to create a dotnet service",
+        "rootFolder":"page",
+        "variable":"_ComponentName_"
+      }
+    ]
+  }

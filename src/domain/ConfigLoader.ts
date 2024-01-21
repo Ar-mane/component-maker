@@ -7,7 +7,6 @@ import messages from "@/constants/Message.json";
 import { DialogManager } from "@/ui/DialogManager";
 import { rootUri, subFolderUri } from "@/utility/Uri";
 import { isFileExist, readFile } from "@/utility/fileUtility";
-import { log } from "@/utility/logger";
 import * as fs from "fs-extra";
 import * as path from "node:path";
 import { ExtensionContext, Uri, extensions, window, workspace } from "vscode";
@@ -37,8 +36,7 @@ export class ConfigLoader {
 
   private generateEmptyTemplate() {
     const templateFolder = this.getTemplateFolderFromExtension();
-    log(templateFolder);
-    fs.copy(templateFolder, this.rootFolder.path + "/sss", {
+    fs.copy(templateFolder, this.rootFolder.fsPath, {
       overwrite: true,
     });
   }
@@ -46,7 +44,6 @@ export class ConfigLoader {
   private getTemplateFolderFromExtension() {
     const extensionPath = extensions.getExtension(EXTENSION_ID)?.extensionPath;
     const templateFolder = path.join(extensionPath || "", "template");
-    log(templateFolder);
     return templateFolder;
   }
 
@@ -54,9 +51,9 @@ export class ConfigLoader {
     if (await DialogManager.shouldCreateNewConfig()) {
       this.generateEmptyTemplate();
       window.showInformationMessage(messages.cloningTemplateInfo);
-      workspace
-        .openTextDocument(this.projectConfigFileUri)
-        .then(window.showTextDocument);
+      workspace.openTextDocument(this.projectConfigFileUri).then((doc) => {
+        window.showTextDocument(doc);
+      });
     }
   }
   getProperConfig = async (): Promise<Config | undefined> => {

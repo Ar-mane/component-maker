@@ -2,6 +2,7 @@ import { Uri, workspace } from "vscode";
 import { Config } from "@/config/types";
 import { generateUriFromRootFilename } from "./utility";
 import path = require("path");
+import { existsSync, statSync } from "fs";
 
 export async function writeFile(uri: Uri, content: string) {
   return workspace.fs.writeFile(uri, new Uint8Array(Buffer.from(content)));
@@ -24,13 +25,21 @@ export const isFileExist = async (uri: Uri): Promise<boolean> => {
   }
 };
 
+function getParentUri(uri: Uri): Uri | undefined {
+  const isFile = existsSync(uri.fsPath) && statSync(uri.fsPath).isFile();
+
+  const parentPath = isFile ? path.dirname(uri.fsPath) : uri.fsPath;
+
+  return Uri.file(parentPath);
+}
+
 export async function fillTemplateByComponentName(
   config: Config,
   content: string,
   componentName: string
 ) {
   return content.replace(
-    new RegExp(config.templateComponentName, "g"),
+    new RegExp(config.templateFolder, "g"),
     componentName
   );
 }

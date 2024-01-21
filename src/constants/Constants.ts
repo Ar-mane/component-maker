@@ -1,4 +1,5 @@
 export const CONFIG_FILE_NAME_IN_WORKSPACE = ".cmrc.json";
+export const EXTENSION_ID = "Ar-mane.component-maker";
 export const MC_MAIN_CMD = "extension.makeComponent";
 
 export const NO_CONFIG_FOUND_MESSAGE =

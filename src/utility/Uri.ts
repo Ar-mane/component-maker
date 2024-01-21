@@ -1,7 +1,7 @@
 import {
   tryToReadDirectory
 } from "@/utility/fileUtility";
-import { posix } from "path";
+import { posix } from "path/posix";
 import { Uri, workspace } from "vscode";
 import path = require("path");
 
@@ -13,17 +13,17 @@ export async function folderWhereToCreateComponent(uri: Uri) {
   return path.dirname(uri.fsPath);
 }
 
-export const generateUriFromRootFilename = (fileName: string): Uri => {
-  let folderUri;
-
+export const rootUri = (): Uri => {
   if (workspace.workspaceFolders) {
-    folderUri = workspace.workspaceFolders[0].uri;
-    var res = folderUri?.with({
-      path: posix.join(folderUri.path, fileName),
-    });
-
-    return res;
+    return workspace.workspaceFolders[0].uri;
   }
-
   throw new Error("no workspaceFolders");
+};
+
+export const subFolderUri = (uri: Uri, path: string): Uri => {
+  var res = uri?.with({
+    path: posix.join(uri.path, path),
+  });
+
+  return res;
 };

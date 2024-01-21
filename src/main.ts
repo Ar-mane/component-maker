@@ -2,17 +2,15 @@ import { Config } from "@/config/types";
 import { ExtensionContext, Uri, window } from "vscode";
 
 import {
-  checkIfTemplateFolderExist,
   fillTemplateByComponentName,
   getTemplateFilesUris,
   isFileExist,
   readFile,
-  writeFile
+  writeFile,
 } from "@/utility/fileUtility";
-import {
-  folderWhereToCreateComponent,
-  getProperConfig
-} from "@/utility/utility";
+
+import { ConfigLoader } from "./domain/ConfigLoader";
+import path = require("path");
 
 async function writeComponentFiles(
   config: Config,
@@ -37,33 +35,51 @@ async function writeComponentFiles(
 
 export async function makeComponent(_context: ExtensionContext, uri?: Uri) {
   try {
-    const customConfig = await getProperConfig();
+    const loader = ConfigLoader.from(_context);
 
-    if (!(await checkIfTemplateFolderExist(customConfig))) {
-      return window.showErrorMessage("No template folder found");
+    const customConfig = await loader.getProperConfig();
+
+    if (!customConfig) {
+      return;
     }
 
     if (!uri) {
       return window.showErrorMessage("No file path found.");
     }
 
-    const componentName = await window.showInputBox({
-      prompt: "Component name ?",
-    });
+    // const submenuItems = [
+    //   {
+    //     label: "📄 add component",
+    //     detail: "to create a complete next component",
+    //     path: "/ss/s/eee/s/e",
+    //   },
+    //   {
+    //     label: "🗃️ add page",
+    //     detail: "to create a complete next page",
+    //   },
+    // ];
 
-    if (!componentName) {
-      return window.showErrorMessage("No component name passed");
-    }
+    // const selection = await window.showQuickPick(submenuItems);
 
-    const directory = await folderWhereToCreateComponent(uri);
+    // log(`Selected: ${JSON.stringify(selection)}`);
 
-    if (await componentAlreadyExist(directory, componentName)) {
-      return window.showErrorMessage(
-        `component ${componentName} already exist in this folder`
-      );
-    }
+    // const componentName = await window.showInputBox({
+    //   prompt: "Component name ?",
+    // });
 
-    writeComponentFiles(customConfig, directory, componentName);
+    // if (!componentName) {
+    //   return window.showErrorMessage("No component name passed");
+    // }
+
+    // const directory = await folderWhereToCreateComponent(uri);
+
+    // if (await componentAlreadyExist(directory, componentName)) {
+    //   return window.showErrorMessage(
+    //     `component ${componentName} already exist in this folder`
+    //   );
+    // }
+
+    // writeComponentFiles(customConfig, directory, componentName);
   } catch (e) {
     console.error(e);
   }
@@ -78,7 +94,7 @@ const makeUriForComponent = (
     directory +
       template.path
         .split(config.templateFolder)[1]
-        .replace(new RegExp(config.templateComponentName, "g"), componentName)
+        .replace(new RegExp(config.templates[0].variable, "g"), componentName)
   );
   return uri;
 };

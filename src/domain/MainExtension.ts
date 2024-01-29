@@ -1,27 +1,24 @@
 import { ExtensionContext, Uri } from "vscode";
 import { ConfigLoader } from "./ConfigLoader";
+import { TemplateManager } from "./TemplateManager";
 
 export class MainExtension {
   private context: ExtensionContext;
-  private uri: Uri | undefined;
+  private uri: Uri;
 
-  private constructor(context: ExtensionContext, uri?: Uri) {
+  private constructor(context: ExtensionContext, uri: Uri) {
     this.context = context;
     this.uri = uri;
   }
 
-  setContext(context: ExtensionContext) {
+  private setContext(context: ExtensionContext) {
     this.context = context;
   }
 
   async run() {
-    const configLoader = ConfigLoader.from(this.context);
-    const config = await configLoader.getProperConfig();
+    const configLoader = ConfigLoader.from(this.context, this.uri);
 
-    if (!config) {
-      return;
-    }
-    
+    TemplateManager.from(this.context, configLoader).run();
 
     // if (!uri) {
     //   return window.showErrorMessage("No file path found.");
@@ -30,7 +27,7 @@ export class MainExtension {
 
   // ______ singleton _______
   private static instance: MainExtension | null = null;
-  public static from(context: ExtensionContext, uri?: Uri): MainExtension {
+  public static from(context: ExtensionContext, uri: Uri): MainExtension {
     if (this.instance === null) {
       this.instance = new MainExtension(context, uri);
     }

@@ -9,10 +9,11 @@
         "variable":"_ComponentName_"
       },
       {
-        "label":"🗃️ add service",
-        "detail":"to create a dotnet service",
+        "label":"🗃️ add page",
+        "detail":"to create a Next page",
         "rootFolder":"page",
-        "variable":"_ComponentName_"
+        "variable":"_ComponentName_",
+        "destination": "src/pages"
       }
     ]
   }

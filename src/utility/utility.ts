@@ -5,13 +5,7 @@ import { posix } from "path";
 import { Uri, workspace } from "vscode";
 import path = require("path");
 
-export async function folderWhereToCreateComponent(uri: Uri) {
-  if (await tryToReadDirectory(uri.path)) {
-    return uri.path;
-  }
-
-  return path.dirname(uri.fsPath);
-}
+// to delete if succeed 
 
 export const generateUriFromRootFilename = (fileName: string): Uri => {
   let folderUri;

@@ -2,8 +2,8 @@
   "description": "Configuration interface for a tool that utilizes templates for various operations.",
   "type": "object",
   "properties": {
-    "templateFolder": {
-      "description": "The folder where templates are stored. Default is '.templates'.",
+    "dir": {
+      "description": "The folder where templates are stored. Default is '.cm_templates'.",
       "type": "string"
     },
     "templates": {
@@ -15,7 +15,7 @@
     }
   },
   "required": [
-    "templateFolder",
+    "dir",
     "templates"
   ],
   "definitions": {
@@ -31,16 +31,16 @@
           "description": "Template details for additional information.",
           "type": "string"
         },
-        "rootFolder": {
-          "description": "Folder name inside the template folder. Example: '.templates/component' ==> rootFolder = 'component'.",
+        "templateDir": {
+          "description": "Directory name inside the template directory. Example: '.cm_templates/component' ==> D = 'component'.",
           "type": "string"
         },
         "variable": {
-          "description": "Variable interpolation: It can be a folder name, a file name, or content in a file.\nIt is replaced by user input during the operation.",
+          "description": "Variable interpolation: It can be a directory name, a file name, or content in a file.\nIt is replaced by user input during the operation.",
           "type": "string"
         },
-        "destination": {
-          "description": "Template destination folder. Some templates may require a specific folder.\nProvide the folder if needed (optional). If absent, the default destination is the folder clicked.",
+        "destinationDir": {
+          "description": "Template destination directory. Some templates may require a specific directory.\nProvide a directory if needed (optional). If absent, the default directory is the directory clicked.",
           "type": "string"
         },
         "files": {
@@ -61,7 +61,7 @@
       "required": [
         "detail",
         "label",
-        "rootFolder",
+        "templateDir",
         "variable"
       ]
     },
@@ -69,26 +69,26 @@
       "description": "Interface representing a file affected by the template operation.",
       "type": "object",
       "properties": {
-        "source": {
+        "sourceFile": {
           "description": "Filename source, relative path. Example: `.templates/page/__componentName__.ext`, fileName: `__componentName__.ext`.",
           "type": "string"
         },
-        "destination": {
-          "description": "Filename destination, absolute path starting from your workspace root.\nExample: `src/pages/__componentName__.ext`.",
+        "destinationDir": {
+          "description": "directory destination, absolute path starting from your workspace root.\nExample: `src/pages`.",
           "type": "string"
         }
       },
       "required": [
-        "destination",
-        "source"
+        "destinationDir",
+        "sourceFile"
       ]
     },
     "Effect": {
       "description": "Interface representing an effect to be applied after the template operation on files.",
       "type": "object",
       "properties": {
-        "source": {
-          "description": "Filename source to update, absolute path starting from your workspace root.\nExample: `src/service/dependency-injection.ext`.",
+        "file": {
+          "description": "Filename to update, absolute path starting from your workspace root.\nExample: `src/service/dependency-injection.ext`.",
           "type": "string"
         },
         "action": {
@@ -105,7 +105,7 @@
           "type": "string"
         },
         "content": {
-          "description": "Content to add during the edit action.",
+          "description": "Content to add during the edit action.\nExample : content = '// serviceRegister.singleton(new _ComponentName_Service())'",
           "type": "string"
         }
       },
@@ -113,7 +113,7 @@
         "action",
         "concat",
         "content",
-        "source"
+        "file"
       ]
     }
   },

@@ -50,8 +50,6 @@ export class TemplateManager {
       const relativePath = this.getTemplateFile(file, template);
       const folderTarget = this.getTargetFolder(relativePath, template);
 
-      // TODO check files exceptions destinations  here
-
       // TODO , check this , maybe to be somewere else
 
       const resolvedPath = this.resolvePath(
@@ -77,18 +75,18 @@ export class TemplateManager {
   }
 
   getTargetFolder(file: string, template: Template) {
-    const specialFile = template.files?.find((e) => e.source === file);
+    const specialFile = template.files?.find((e) => e.sourceFile === file);
     if (specialFile) {
       return subFolderUri(
         this.configLoader.getWorkspaceUri,
-        specialFile.destination
+        specialFile.destinationDir
       );
     }
 
-    if (template.destination) {
+    if (template.destinationDir) {
       return subFolderUri(
         this.configLoader.getWorkspaceUri,
-        template.destination
+        template.destinationDir
       );
     }
 
@@ -103,21 +101,12 @@ export class TemplateManager {
   }
   getTemplateFile(file: Uri, template: Template): string {
     const relativePath = relative(
-      `${this.config?.templateFolder}/${template.rootFolder}`,
+      `${this.config?.dir}/${template.templateDir}`,
       workspace.asRelativePath(file)
     )
       .split(path.sep)
       .join("/");
     return relativePath;
-  }
-
-  makeUriForComponent(
-    context: ExtensionContext,
-    template: Template,
-    file: Uri,
-    componentName: string
-  ): import("vscode").Uri {
-    throw new Error("Method not implemented.");
   }
 
   // ______ singleton _______

@@ -1,6 +1,5 @@
 import { Uri, workspace } from "vscode";
 import { Config, Template } from "@/config/types";
-import { generateUriFromRootFilename } from "./utility";
 import path = require("path");
 import { existsSync, statSync } from "fs";
 
@@ -42,11 +41,6 @@ export async function getResolvedFileContent(
   return content.replace(new RegExp(template.variable, "g"), componentName);
 }
 
-export const getConfigFromUri = async (uri: Uri): Promise<Config> => {
-  const readStr = await readFile(uri);
-  return JSON.parse(readStr) as Config;
-};
-
 export const getTemplateFilesUris = async (
   config: Config,
   template: Template
@@ -54,16 +48,3 @@ export const getTemplateFilesUris = async (
   await workspace.findFiles(
     `${config.templateFolder}/${template.rootFolder}/**/*.*`
   );
-
-export async function tryToReadDirectory(path: string) {
-  try {
-    const directory = await workspace.fs.readDirectory(Uri.file(path));
-    return directory;
-  } catch {
-    return null;
-  }
-}
-export async function checkIfTemplateFolderExist(config: Config) {
-  var templatefolder = generateUriFromRootFilename(config.templateFolder);
-  return await isFileExist(templatefolder);
-}

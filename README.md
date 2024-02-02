@@ -7,15 +7,16 @@ Component Maker is a versatile VS Code extension designed to simplify the proces
 - **Easy Component Generation**: Simply right-click in the file editor or on a file in the explorer, and choose `📐Make Component` to generate a component as needed.
 
 - **Customizable Templates**: Create and customize your own template folder to match your project's requirements. The extension clones your model, similar to how plop does, allowing for flexibility in your file structure.
-
-![Component Maker in Action](https://user-images.githubusercontent.com/46249965/204175708-1b02f881-87ef-4f4b-aeaf-2fb37fde1891.png)
+  
+![Component Maker in Action](https://github.com/Ar-mane/component-maker/assets/46249965/663ce682-93ee-4e9b-8597-ee0e4c601df2)
 
 ## Getting Started
 
 1. **Generated Templates**:
    - The extension generates the following templates on startup, which you can customize or extend as needed:
 
-IMGGGGGGGGGGGGGGGGGGGGG
+![image](https://github.com/Ar-mane/component-maker/assets/46249965/4b9c2c16-77c9-4957-a622-d566992133f8)
+
 
 2. **Customize or Add Templates**:
    - You can modify the existing templates or add new ones according to your project's structure. The generated templates serve as a starting point for your customization.

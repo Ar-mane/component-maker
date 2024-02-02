@@ -65,7 +65,7 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "vs-package": "vsce package --no-dependencies",
-    "generate-schema": "npx ts-node src/generate-schema.ts",
+    "gs": "npx ts-node src/generate-schema.ts",
     "vs-publish": "vsce publish --no-dependencies"
   },
   "devDependencies": {

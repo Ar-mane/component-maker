@@ -1,11 +1,10 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
+import { getProgramFromFiles, generateSchema } from "typescript-json-schema";
 
-import * as TJS from "typescript-json-schema";
+const program = getProgramFromFiles([resolve("src/config/types.ts")]);
+const schema = generateSchema(program, "Config", { required: true });
+const outputFilePath = resolve(__dirname, "../web/public/schema.json");
 
-const program = TJS.getProgramFromFiles([resolve("src/config/config.ts")]);
-const schema = TJS.generateSchema(program, "Config", { required: true });
-const outputFilePath = resolve(__dirname, "json-schema.json");
 writeFileSync(outputFilePath, JSON.stringify(schema, null, 2));
 
-console.log(`JSON schema has been generated and saved to ${outputFilePath}`);

@@ -3,10 +3,10 @@
  */
 export interface Config {
   /**
-   * The folder where templates are stored. Default is '.templates'.
+   * The folder where templates are stored. Default is '.cm_templates'.
    * @TJS-type string
    */
-  templateFolder: string;
+  dir: string;
 
   /**
    * List of templates to be used for operations.
@@ -29,21 +29,21 @@ export interface Template {
   detail: string;
 
   /**
-   * Folder name inside the template folder. Example: '.templates/component' ==> rootFolder = 'component'.
+   * Directory name inside the template directory. Example: '.cm_templates/component' ==> D = 'component'.
    */
-  rootFolder: string;
+  templateDir: string;
 
   /**
-   * Variable interpolation: It can be a folder name, a file name, or content in a file.
+   * Variable interpolation: It can be a directory name, a file name, or content in a file.
    * It is replaced by user input during the operation.
    */
   variable: string;
 
   /**
-   * Template destination folder. Some templates may require a specific folder.
-   * Provide the folder if needed (optional). If absent, the default destination is the folder clicked.
+   * Template destination directory. Some templates may require a specific directory.
+   * Provide a directory if needed (optional). If absent, the default directory is the directory clicked.
    */
-  destination?: string;
+  destinationDir?: string;
 
   /**
    * If there are multiple destinations, provide a destination for each file (optional).
@@ -63,13 +63,13 @@ export interface SpecialFile {
   /**
    * Filename source, relative path. Example: `.templates/page/__componentName__.ext`, fileName: `__componentName__.ext`.
    */
-  source: string;
+  sourceFile: string;
 
   /**
-   * Filename destination, absolute path starting from your workspace root.
-   * Example: `src/pages/__componentName__.ext`.
+   * directory destination, absolute path starting from your workspace root.
+   * Example: `src/pages`.
    */
-  destination: string;
+  destinationDir: string;
 }
 
 /**
@@ -77,10 +77,10 @@ export interface SpecialFile {
  */
 export interface Effect {
   /**
-   * Filename source to update, absolute path starting from your workspace root.
+   * Filename to update, absolute path starting from your workspace root.
    * Example: `src/service/dependency-injection.ext`.
    */
-  source: string;
+  file: string;
 
   /**
    * Action to apply, like edit.
@@ -94,6 +94,7 @@ export interface Effect {
 
   /**
    * Content to add during the edit action.
+   * Example : content = '// serviceRegister.singleton(new _ComponentName_Service())'
    */
   content: string;
 }

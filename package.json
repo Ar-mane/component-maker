@@ -7,7 +7,8 @@
     "email": "abderrahmane.arache@gmail.com",
     "url": "https://github.com/Ar-mane"
   },
-  "version": "1.1.1",
+  
+  "version": "2.0.0",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -52,7 +53,7 @@
     "type": "git",
     "url": "https://github.com/Ar-mane/component-maker"
   },
-  "homepage": "https://github.com/Ar-mane/component-maker",
+  "homepage": "https://component-maker.vercel.app/",
   "license": "MIT",
   "scripts": {
     "vscode:prepublish": "pnpm package",

@@ -46,5 +46,5 @@ export const getTemplateFilesUris = async (
   template: Template
 ): Promise<Uri[]> =>
   await workspace.findFiles(
-    `${config.templateFolder}/${template.rootFolder}/**/*.*`
+    `${config.dir}/${template.templateDir}/**/*.*`
   );

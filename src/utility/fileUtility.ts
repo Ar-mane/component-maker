@@ -1,7 +1,8 @@
 import { Uri, workspace } from "vscode";
-import { Config } from "@/config/types";
+import { Config, Template } from "@/config/types";
 import { generateUriFromRootFilename } from "./utility";
 import path = require("path");
+import { existsSync, statSync } from "fs";
 
 export async function writeFile(uri: Uri, content: string) {
   return workspace.fs.writeFile(uri, new Uint8Array(Buffer.from(content)));
@@ -24,23 +25,35 @@ export const isFileExist = async (uri: Uri): Promise<boolean> => {
   }
 };
 
-export async function fillTemplateByComponentName(
-  config: Config,
-  content: string,
+export function getParentUri(uri: Uri): Uri {
+  const isFile = existsSync(uri.fsPath) && statSync(uri.fsPath).isFile();
+
+  const parentPath = isFile ? path.dirname(uri.fsPath) : uri.fsPath;
+
+  return Uri.file(parentPath);
+}
+
+export async function getResolvedFileContent(
+  template: Template,
+  file: Uri,
   componentName: string
 ) {
-  return content.replace(
-    new RegExp(config.templateComponentName, "g"),
-    componentName
-  );
+  var content = await readFile(file);
+  return content.replace(new RegExp(template.variable, "g"), componentName);
 }
+
 export const getConfigFromUri = async (uri: Uri): Promise<Config> => {
   const readStr = await readFile(uri);
   return JSON.parse(readStr) as Config;
 };
 
-export const getTemplateFilesUris = async (config: Config): Promise<Uri[]> =>
-  await workspace.findFiles(`${config.templateFolder}/**/*.*`);
+export const getTemplateFilesUris = async (
+  config: Config,
+  template: Template
+): Promise<Uri[]> =>
+  await workspace.findFiles(
+    `${config.templateFolder}/${template.rootFolder}/**/*.*`
+  );
 
 export async function tryToReadDirectory(path: string) {
   try {

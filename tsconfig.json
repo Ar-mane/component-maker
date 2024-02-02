@@ -6,6 +6,8 @@
     "lib": ["es6"],
     "sourceMap": true,
     "rootDir": "src",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "strict": true,
     "baseUrl": "./src",
     "paths": {

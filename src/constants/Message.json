@@ -1,0 +1,7 @@
+{
+  "noConfigFoundInfo": "No custom config found in your project, create one ?",
+  "noConfigActionCreate": "Create one ???",
+  "noConfigActionDefault": "i dont want to use this extension",
+  "cloningTemplateInfo": "Initializing templates. Please edit the configuration file and the template content. You can find them in your workspace root",
+  "componentNamePrompt": "Component Name ?"
+}

@@ -9,7 +9,7 @@
   },
   "version": "1.1.1",
   "engines": {
-    "vscode": "^1.73.0"
+    "vscode": "^1.85.0"
   },
   "categories": [
     "Other"
@@ -40,12 +40,6 @@
       }
     ],
     "menus": {
-      "editor/context": [
-        {
-          "command": "extension.makeComponent",
-          "group": "navigation@1"
-        }
-      ],
       "explorer/context": [
         {
           "command": "extension.makeComponent",
@@ -71,20 +65,26 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "vs-package": "vsce package --no-dependencies",
+    "generate-schema": "npx ts-node src/generate-schema.ts",
     "vs-publish": "vsce publish --no-dependencies"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "@types/vscode": "^1.73.1",
-    "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^5.44.0",
-    "eslint": "^8.28.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^18.19.8",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.56.0",
+    "file-url": "^4.0.0",
+    "fs-extra": "^11.2.0",
     "prettier": "2.8.0",
-    "ts-loader": "^9.4.1",
-    "typescript": "^4.9.3",
-    "vsce": "^2.14.0",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5",
+    "typescript-json-schema": "^0.62.0",
     "vscode-test": "^1.6.1",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.0"
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }

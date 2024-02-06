@@ -56,18 +56,22 @@
   "homepage": "https://component-maker.vercel.app/",
   "license": "MIT",
   "scripts": {
-    "vscode:prepublish": "pnpm package",
+    "vscode:prepublish": "yarn package",
     "compile": "webpack --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
     "watch": "webpack --watch --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
     "package": "webpack --mode production --config ./build/node-extension.webpack.config.js",
     "test-compile": "tsc -p ./",
     "test-watch": "tsc -watch -p ./",
-    "pretest": "pnpm test-compile && pnpm lint",
+    "pretest": "yarn test-compile && yarn lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "vs-package": "vsce package --no-dependencies",
     "gs": "npx ts-node src/generate-schema.ts",
     "vs-publish": "vsce publish --no-dependencies"
+  },
+  "vsce": {
+    "dependencies": false,
+    "useYarn": true
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",

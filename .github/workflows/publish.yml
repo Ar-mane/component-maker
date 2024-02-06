@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install pnpm
+      - name: Install yarn
         run: npm install -g yarn
 
       - name: Get Yarn store directory

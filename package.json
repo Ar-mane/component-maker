@@ -28,9 +28,6 @@
     "typescript"
   ],
   "publisher": "Ar-mane",
-  "activationEvents": [
-    "onCommand:extension.makeComponent"
-  ],
   "main": "./dist/extension.js",
   "icon": "assets/images/icon.png",
   "contributes": {

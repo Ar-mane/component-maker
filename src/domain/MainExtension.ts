@@ -16,13 +16,8 @@ export class MainExtension {
   }
 
   async run() {
-    const configLoader = ConfigLoader.from(this.context, this.uri);
-
-    TemplateManager.from(this.context, configLoader).run();
-
-    // if (!uri) {
-    //   return window.showErrorMessage("No file path found.");
-    // }
+    const configLoader = ConfigLoader.from(this.uri);
+    TemplateManager.from(configLoader).run();
   }
 
   // ______ singleton _______

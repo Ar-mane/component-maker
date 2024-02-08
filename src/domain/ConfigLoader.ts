@@ -5,42 +5,36 @@ import {
 } from "@/constants/Constants";
 import messages from "@/constants/Message.json";
 import {
-  ExtensionTerminationError,
   TerminateReason,
-} from "@/exceptions/ExtensionTerminationError";
+  TerminationError,
+} from "@/exceptions/TerminationError";
 import { DialogManager } from "@/ui/DialogManager";
 import { rootUri, subFolderUri } from "@/utility/Uri";
 import { getParentUri, isFileExist, readFile } from "@/utility/fileUtility";
 import * as fs from "fs-extra";
 import * as path from "node:path";
-import { ExtensionContext, Uri, extensions, window, workspace } from "vscode";
+import { Uri, extensions, window, workspace } from "vscode";
 
 export class ConfigLoader {
-  context: ExtensionContext;
   projectConfigFileUri: Uri;
   workspaceUri: Uri;
   destinationUri: Uri;
 
-  private constructor(context: ExtensionContext, uri: Uri) {
-    this.context = context;
+  private constructor(uri: Uri) {
     this.workspaceUri = rootUri();
     this.destinationUri = getParentUri(uri);
     this.projectConfigFileUri = subFolderUri(
       this.workspaceUri,
-      CONFIG_FILE_NAME_IN_WORKSPACE
+      CONFIG_FILE_NAME_IN_WORKSPACE,
     );
   }
 
-  private setContext(context: ExtensionContext) {
-    this.context = context;
-  }
-
-  private async readConfigFromConfigFile(): Promise<Config> {
+  private async loadConfigFromConfigFile(): Promise<Config> {
     const readStr = await readFile(this.projectConfigFileUri);
     return JSON.parse(readStr) as Config;
   }
 
-  private generateEmptyTemplate() {
+  private initializeEmptyTemplate() {
     const templateFolder = this.getTemplateFolderFromExtension();
     fs.copy(templateFolder, this.workspaceUri.fsPath, {
       overwrite: true,
@@ -53,39 +47,42 @@ export class ConfigLoader {
     return templateFolder;
   }
 
-  private async manageCloningTemplateFolder() {
-    if (await DialogManager.shouldCreateNewConfig()) {
-      this.generateEmptyTemplate();
+  private async handleTemplateFolderCloning() {
+    if (await DialogManager.promptCreateNewConfig()) {
+      this.initializeEmptyTemplate();
       window.showInformationMessage(messages.cloningTemplateInfo);
       workspace.openTextDocument(this.projectConfigFileUri).then((doc) => {
         window.showTextDocument(doc);
       });
+      return true;
     }
+    return false;
   }
-  getProperConfig = async (): Promise<Config> => {
+  getConfig = async (): Promise<Config> => {
     const fileExist = await isFileExist(this.projectConfigFileUri);
 
     if (fileExist) {
-      return this.readConfigFromConfigFile();
+      return this.loadConfigFromConfigFile();
     } else {
-      this.manageCloningTemplateFolder();
-      throw new ExtensionTerminationError(TerminateReason.configCreated);
+      const isCreated = await this.handleTemplateFolderCloning();
+      throw new TerminationError(
+        isCreated
+          ? TerminateReason.ConfigCreatedSuccessfully
+          : TerminateReason.ConfigCreationAborted,
+      );
     }
   };
 
   public get getWorkspaceUri(): Uri {
     return this.workspaceUri;
   }
+
   // ______ singleton _______
   private static instance: ConfigLoader | null = null;
-  public static from(
-    context: ExtensionContext,
-    destinationUri: Uri
-  ): ConfigLoader {
+  public static from(destinationUri: Uri): ConfigLoader {
     if (this.instance === null) {
-      this.instance = new ConfigLoader(context, destinationUri);
+      this.instance = new ConfigLoader(destinationUri);
     }
-    this.instance.setContext(context);
     return this.instance;
   }
   // ____ END singleton _____

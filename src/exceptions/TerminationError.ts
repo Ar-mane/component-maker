@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export enum TerminateReason {
-  componentAlreadyExist,
-  configCreated,
-  templateSelect,
-  emptyComponentName,
+  ComponentAlreadyExists,
+  NoUriProvided,
+  ConfigCreatedSuccessfully,
+  ConfigCreationAborted,
+  TemplateSelectionFailed,
+  EmptyComponentName,
 }
-export class ExtensionTerminationError extends Error {
+export class TerminationError extends Error {
   private _reason: TerminateReason;
   public get reason(): TerminateReason {
     return this._reason;

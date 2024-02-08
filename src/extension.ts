@@ -2,31 +2,38 @@ import { MC_MAIN_CMD } from "@/constants/Constants";
 import { log } from "@/utility/logger";
 import { ExtensionContext, Uri, commands } from "vscode";
 import { MainExtension } from "./domain/MainExtension";
-import { ExtensionTerminationError } from "./exceptions/ExtensionTerminationError";
+import {
+  TerminationError,
+  TerminateReason,
+} from "./exceptions/TerminationError";
 import { DialogManager } from "./ui/DialogManager";
 
 export function deactivate() {}
 
 export function activate(context: ExtensionContext) {
-  log("Component Maker up");
+  log("Component Maker is active");
 
   const command = commands.registerCommand(MC_MAIN_CMD, (uri?: Uri) => {
     try {
       if (!uri) {
-        throw ExtensionTerminationError;
+        throw new TerminationError(TerminateReason.NoUriProvided);
       }
-      MainExtension.from(context, uri).run();
-      DialogManager.showNotification(true);  //TODO: fix this
-    
+
+      MainExtension.from(context, uri)
+        .run()
+        .then(() => DialogManager.displaySuccessNotification());
     } catch (error) {
-      if (error instanceof ExtensionTerminationError) {
-        //Exit
-        DialogManager.showNotification(false, error.reason); // not a good idea tho , using enum as arg s here
-      } else {
-        console.error(error);
-      }
+      handleActivationError(error);
     }
   });
 
   context.subscriptions.push(command);
+}
+
+function handleActivationError(error: any) {
+  if (error instanceof TerminationError) {
+    DialogManager.displayWarning(error.reason);
+  } else {
+    console.error(error);
+  }
 }

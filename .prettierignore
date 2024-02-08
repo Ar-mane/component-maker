@@ -1,5 +1,7 @@
 out
 dist
 node_modules
+web
+schema.json
 .vscode-test/
 *.vsix

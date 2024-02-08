@@ -2,6 +2,7 @@ import { Uri, workspace } from "vscode";
 import { Config, Template } from "@/config/types";
 import path = require("path");
 import { existsSync, statSync } from "fs";
+import { relative } from "path";
 
 export async function writeFile(uri: Uri, content: string) {
   return workspace.fs.writeFile(uri, new Uint8Array(Buffer.from(content)));
@@ -35,16 +36,28 @@ export function getParentUri(uri: Uri): Uri {
 export async function getResolvedFileContent(
   template: Template,
   file: Uri,
-  componentName: string
+  componentName: string,
 ) {
   var content = await readFile(file);
   return content.replace(new RegExp(template.variable, "g"), componentName);
 }
 
+export function calculateRelativePathFromFile(
+  config: Config,
+  template: Template,
+  file: Uri,
+): string {
+  const relativePath = relative(
+    `${config.dir}/${template.templateDir}`,
+    workspace.asRelativePath(file),
+  )
+    .split(path.sep)
+    .join("/");
+  return relativePath;
+}
+
 export const getTemplateFilesUris = async (
   config: Config,
-  template: Template
+  template: Template,
 ): Promise<Uri[]> =>
-  await workspace.findFiles(
-    `${config.dir}/${template.templateDir}/**/*.*`
-  );
+  await workspace.findFiles(`${config.dir}/${template.templateDir}/**/*.*`);

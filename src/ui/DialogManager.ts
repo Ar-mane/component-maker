@@ -7,14 +7,13 @@ import {
 import { window } from "vscode";
 
 export class DialogManager {
-  static async displayWarning(failReason?: TerminateReason) {
-    window.showInformationMessage("YAAAY");
+  static async displayWarning(failReason: TerminateReason) {
+    window.showInformationMessage(messages.terminationReason[failReason]);
   }
   static async displaySuccessNotification() {
-    window.showInformationMessage("YAAAY");
+    window.showInformationMessage(messages.ComponentCreatedSuccessfully);
   }
   static async promptCreateNewConfig() {
-    //TODO: needs rework
     const choice = await window.showInformationMessage(
       messages.noConfigFoundInfo,
       ...[messages.noConfigActionCreate, messages.noConfigActionDefault],

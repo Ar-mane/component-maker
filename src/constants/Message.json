@@ -1,7 +1,18 @@
 {
   "noConfigFoundInfo": "No custom config found in your project, create one ?",
+  "extensionRunning": "Component Maker is active",
   "noConfigActionCreate": "Create one ???",
   "noConfigActionDefault": "i dont want to use this extension",
   "cloningTemplateInfo": "Initializing templates. Please edit the configuration file and the template content. You can find them in your workspace root",
-  "componentNamePrompt": "Component Name ?"
+  "componentNamePrompt": "Component Name ?",
+  "terminationReason": {
+    "ConfigCreatedSuccessfully": "Initializing templates. Please edit the configuration file and template content. You can find them in your workspace root.",
+    "ComponentAlreadyExists": "This component already exists. Please choose another name or location directory.",
+    "NoUriProvided": "Please select where to create the component in your file explorer.",
+    "ConfigCreationAborted": "Operation canceled.",
+    "TemplateSelectionFailed": "Template not found. Please use the provided template or create a new one.",
+    "TemplateCompatibilityFailed": "Incompatibility detected: Your configuration and templates do not match.",
+    "EmptyComponentName": "Component name can't be empty. Please provide a better name."
+  },
+  "ComponentCreatedSuccessfully": "Component Created"
 }

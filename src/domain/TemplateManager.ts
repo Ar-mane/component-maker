@@ -12,8 +12,7 @@ import {
   isFileExist,
   writeFile,
 } from "@/utility/fileUtility";
-import path, { relative } from "path";
-import { ExtensionContext, Uri, workspace } from "vscode";
+import { Uri } from "vscode";
 import { ConfigLoader } from "./ConfigLoader";
 
 export class TemplateManager {
@@ -28,7 +27,7 @@ export class TemplateManager {
     this.config = await this.configLoader.getConfig();
     const template = await DialogManager.promptTemplateSelection(this.config);
     const componentName = await DialogManager.promptComponentName();
-    this.processTemplate(template, componentName);
+    await this.processTemplate(template, componentName);
   }
 
   private async processTemplate(template: Template, componentName: string) {
@@ -66,7 +65,7 @@ export class TemplateManager {
         throw new TerminationError(TerminateReason.ComponentAlreadyExists);
       }
 
-      writeFile(Uri.file(resolvedTarget), componentContent);
+      await writeFile(Uri.file(resolvedTarget), componentContent);
     });
   }
 

@@ -53,9 +53,9 @@
   "license": "MIT",
   "scripts": {
     "vscode:prepublish": "yarn package",
-    "compile": "webpack --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
-    "watch": "webpack --watch --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
-    "package": "webpack --mode production --config ./build/node-extension.webpack.config.js",
+    "compile": "webpack --config webpack.config.js",
+    "watch": "yarn compile --watch",
+    "package": "webpack --mode production --config webpack.config.js",
     "lint": "eslint src --ext ts",
     "gs": "npx ts-node src/generate-schema.ts",
     "vs-package": "vsce package --no-dependencies",

@@ -17,7 +17,7 @@ export class MainExtension {
 
   async run() {
     const configLoader = ConfigLoader.from(this.uri);
-    TemplateManager.from(configLoader).run();
+    await TemplateManager.from(configLoader).run();
   }
 
   // ______ singleton _______

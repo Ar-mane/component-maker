@@ -1,8 +1,12 @@
 {
   "workbench.colorCustomizations": {
-    "activityBar.background": "#1c5703",
-    "titleBar.activeBackground": "#66be00",
-    "titleBar.activeForeground": "#FFFBFD"
+    "activityBar.background": "#ffffff",
+    "activityBar.foreground": "#ffffff",
+    "activityBar.activeBackground": "#3f495f",
+    "activityBar.inactiveForeground": "#110038",
+    "titleBar.activeBackground": "#152d4d",
+    "titleBar.activeForeground": "#FFFFFF",
+    "debugToolBar.background": "#1a1a1a"
   },
   "conventionalCommits.scopes": ["logger"]
 }

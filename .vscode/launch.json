@@ -10,7 +10,7 @@
         "--extensionDevelopmentPath=${workspaceFolder}",
         "--disable-extensions",
         "--skipGetOptimized",
-        "--enable-proposed-api",
+        "--enable-proposed-api"
       ],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "preLaunchTask": "${defaultBuildTask}",

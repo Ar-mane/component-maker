@@ -7,7 +7,7 @@ import {
 } from "@/exceptions/TerminationError";
 import { DialogManager } from "@/ui/DialogManager";
 import { log } from "@/utility/logger";
-import { ExtensionContext, Uri, ViewColumn, commands, window } from "vscode";
+import { ExtensionContext, Uri, commands } from "vscode";
 
 export function activate(context: ExtensionContext) {
   log(messages.extensionRunning);
@@ -17,14 +17,21 @@ export function activate(context: ExtensionContext) {
       if (!uri) {
         throw new TerminationError(TerminateReason.NoUriProvided);
       }
-      // const panel = window.createWebviewPanel(
-      //   "centeredMarkdown", // Identifies the type of the webview. Used internally
-      //   "Centered Markdown", // Title of the panel displayed to the user
-      //   ViewColumn.Beside, // Editor column to show the new webview panel in : https://code.visualstudio.com/api/extension-guides/webview
-      //   {}
+      // this is a good conf for now
+      // investigate using webview
+      // if (panel) {
+      //   panel.dispose();
+      // }
+      // panel = window.createWebviewPanel(
+      //   EXTENSION_NAME,
+      //   EXTENSION_NAME,
+      //   ViewColumn.Beside,
+      //   { enableScripts: true }
       // );
-      // // Set the HTML content with your markdown
-      // panel.webview.html += `<h1>HELLOOOO<h1>`; 
+
+      // if (panel.visible) {
+      //   panel.reveal(ViewColumn.Beside, true);
+      // }
 
       await MainExtension.from(context, uri).run();
       DialogManager.displaySuccessNotification();

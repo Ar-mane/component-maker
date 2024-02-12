@@ -1,16 +1,14 @@
-//@ts-check
-
 "use strict";
-
-import { resolve as _resolve } from "path";
+const path = require("path");
 
 /**@type {import('webpack').Configuration}*/
 const config = {
   target: "node",
   mode: "none",
+
   entry: "./src/extension.ts",
   output: {
-    path: _resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "dist"),
     filename: "extension.js",
     libraryTarget: "commonjs2",
     devtoolModuleFilenameTemplate: "./[resource-path]",
@@ -22,7 +20,7 @@ const config = {
   resolve: {
     alias: {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      "@": _resolve("src"),
+      "@": path.resolve("src"),
     },
     extensions: [".ts", ".js"],
   },
@@ -40,4 +38,4 @@ const config = {
     ],
   },
 };
-export default config;
+module.exports = config;

@@ -4,9 +4,8 @@ export enum TerminateReason {
   NoUriProvided = "NoUriProvided",
   ConfigCreatedSuccessfully = "ConfigCreatedSuccessfully",
   ConfigCreationAborted = "ConfigCreationAborted",
-  TemplateSelectionFailed = "TemplateSelectionFailed",
-  EmptyComponentName = "EmptyComponentName",
   TemplateCompatibilityFailed = "TemplateCompatibilityFailed",
+  Canceled = "Canceled",
 }
 
 export class TerminationError extends Error {

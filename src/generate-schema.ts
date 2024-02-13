@@ -7,4 +7,3 @@ const schema = generateSchema(program, "Config", { required: true });
 const outputFilePath = resolve(__dirname, "../web/public/schema.json");
 
 writeFileSync(outputFilePath, JSON.stringify(schema, null, 2));
-

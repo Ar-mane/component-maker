@@ -1,20 +1,22 @@
 import { Config, Template } from "@/config/types";
+import { COMPONENT_NAME_REGEX } from "@/constants/Constants";
 import messages from "@/constants/Message.json";
 import {
-  ExtensionTerminationError,
   TerminateReason,
-} from "@/exceptions/ExtensionTerminationError";
+  TerminationError,
+} from "@/exceptions/TerminationError";
 import { window } from "vscode";
 
 export class DialogManager {
-  static async showNotification(
-    success: boolean,
-    failReason?: TerminateReason
-  ) {
-    window.showInformationMessage("YAAAY");
+  static async displayWarning(failReason: TerminateReason) {
+    if (failReason !== TerminateReason.Canceled) {
+      window.showInformationMessage(messages.terminationReason[failReason]);
+    }
   }
-  static async shouldCreateNewConfig() {
-    //TODO: needs rework
+  static async displaySuccessNotification() {
+    window.showInformationMessage(messages.ComponentCreatedSuccessfully);
+  }
+  static async promptCreateNewConfig() {
     const choice = await window.showInformationMessage(
       messages.noConfigFoundInfo,
       ...[messages.noConfigActionCreate, messages.noConfigActionDefault]
@@ -23,21 +25,33 @@ export class DialogManager {
     return choice === messages.noConfigActionCreate;
   }
 
-  static async propmtTemplateOptions(config: Config): Promise<Template> {
-    const selection = await window.showQuickPick(config.templates);
+  static async promptTemplateSelection(config: Config): Promise<Template> {
+    const selection = await window.showQuickPick(config.templates, {
+      ignoreFocusOut: false,
+    });
+
     if (!selection) {
-      throw new ExtensionTerminationError(TerminateReason.templateSelect);
+      throw new TerminationError(TerminateReason.Canceled);
     }
+
     return selection;
   }
 
-  static async propmtComponentName(): Promise<string> {
+  static async promptComponentName(): Promise<string> {
     const componentName = await window.showInputBox({
       prompt: messages.componentNamePrompt,
+      title: messages.componentNameWarning.title,
+      validateInput: (input) => {
+        if (!input) {
+          return messages.componentNameWarning.empty;
+        }
+        if (!COMPONENT_NAME_REGEX.test(input)) {
+          return messages.componentNameWarning.invalid;
+        }
+      },
     });
-
-    if (!componentName) {
-      throw new ExtensionTerminationError(TerminateReason.emptyComponentName);
+    if (componentName === undefined) {
+      throw new TerminationError(TerminateReason.Canceled);
     }
     return componentName;
   }

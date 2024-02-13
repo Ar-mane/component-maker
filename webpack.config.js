@@ -1,7 +1,4 @@
-//@ts-check
-
 "use strict";
-
 const path = require("path");
 
 /**@type {import('webpack').Configuration}*/
@@ -11,10 +8,10 @@ const config = {
 
   entry: "./src/extension.ts",
   output: {
-    path: path.resolve(__dirname, "..", "dist"),
+    path: path.resolve(__dirname, "dist"),
     filename: "extension.js",
     libraryTarget: "commonjs2",
-    devtoolModuleFilenameTemplate: "../[resource-path]",
+    devtoolModuleFilenameTemplate: "./[resource-path]",
   },
   devtool: "source-map",
   externals: {
@@ -22,6 +19,7 @@ const config = {
   },
   resolve: {
     alias: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       "@": path.resolve("src"),
     },
     extensions: [".ts", ".js"],

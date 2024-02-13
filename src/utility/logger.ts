@@ -17,7 +17,20 @@ class Logger {
   }
 
   public log(message: any): void {
-    this.logger.appendLine(message);
+    let logString: string;
+    if (typeof message === "object" && message !== null) {
+      // Handle arrays separately
+      if (Array.isArray(message)) {
+        logString = JSON.stringify(message);
+      } else {
+        logString = JSON.stringify(message, null, 2); // Add spacing for better readability
+      }
+    } else {
+      // For string, number, and boolean, simply convert to string
+      logString = String(message);
+    }
+    this.logger.appendLine(logString);
+    this.logger.show();
   }
 }
 export function log(message: any) {

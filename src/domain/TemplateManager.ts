@@ -1,92 +1,87 @@
 import { Config, Template } from "@/config/types";
 import {
-  ExtensionTerminationError,
   TerminateReason,
-} from "@/exceptions/ExtensionTerminationError";
+  TerminationError,
+} from "@/exceptions/TerminationError";
 import { DialogManager } from "@/ui/DialogManager";
 import { subFolderUri } from "@/utility/Uri";
 import {
+  calculateRelativePathFromFile,
   getResolvedFileContent,
   getTemplateFilesUris,
   isFileExist,
   writeFile,
 } from "@/utility/fileUtility";
-import path, { relative } from "path";
-import { ExtensionContext, Uri, workspace } from "vscode";
+import { Uri } from "vscode";
 import { ConfigLoader } from "./ConfigLoader";
 
 export class TemplateManager {
-  private context: ExtensionContext;
   private configLoader: ConfigLoader;
   private config: Config | undefined;
 
-  private constructor(context: ExtensionContext, configLoader: ConfigLoader) {
-    this.context = context;
+  private constructor(configLoader: ConfigLoader) {
     this.configLoader = configLoader;
   }
 
-  private setContext(context: ExtensionContext) {
-    this.context = context;
-  }
-
   async run() {
-    this.config = await this.configLoader.getProperConfig();
-    const template = await DialogManager.propmtTemplateOptions(this.config);
-    const componentName = await DialogManager.propmtComponentName();
-    this.manageTemplate(template, componentName);
+    this.config = await this.configLoader.getConfig();
+    const template = await DialogManager.promptTemplateSelection(this.config);
+    const componentName = await DialogManager.promptComponentName();
+    await this.processTemplate(template, componentName);
   }
 
-  private async manageTemplate(template: Template, componentName: string) {
-    const getWorkspaceUri = this.configLoader.getWorkspaceUri;
+  private async processTemplate(template: Template, componentName: string) {
     const filesURIs = await getTemplateFilesUris(this.config!, template);
 
     filesURIs.map(async (file) => {
       var componentContent = await getResolvedFileContent(
         template,
         file,
-        componentName
+        componentName,
       );
 
-      const relativePath = this.getTemplateFile(file, template);
-      const folderTarget = this.getTargetFolder(relativePath, template);
+      const relativePath = calculateRelativePathFromFile(
+        this.config!,
+        template,
+        file,
+      );
+      const folderTarget = this.determineTargetFolder(relativePath, template);
 
       // TODO , check this , maybe to be somewere else
 
       const resolvedPath = this.resolvePath(
         relativePath,
         template,
-        componentName
+        componentName,
       );
       const target = subFolderUri(folderTarget, resolvedPath);
 
       const resolvedTarget = this.resolvePath(
         target.fsPath,
         template,
-        componentName
+        componentName,
       );
       if (await isFileExist(Uri.file(resolvedTarget))) {
-        throw new ExtensionTerminationError(
-          TerminateReason.componentAlreadyExist
-        );
+        throw new TerminationError(TerminateReason.ComponentAlreadyExists);
       }
 
-      writeFile(Uri.file(resolvedTarget), componentContent);
+      await writeFile(Uri.file(resolvedTarget), componentContent);
     });
   }
 
-  getTargetFolder(file: string, template: Template) {
+  determineTargetFolder(file: string, template: Template) {
     const specialFile = template.files?.find((e) => e.sourceFile === file);
     if (specialFile) {
       return subFolderUri(
         this.configLoader.getWorkspaceUri,
-        specialFile.destinationDir
+        specialFile.destinationDir,
       );
     }
 
     if (template.destinationDir) {
       return subFolderUri(
         this.configLoader.getWorkspaceUri,
-        template.destinationDir
+        template.destinationDir,
       );
     }
 
@@ -96,29 +91,16 @@ export class TemplateManager {
   resolvePath(relativePath: string, template: Template, componentName: string) {
     return relativePath.replace(
       new RegExp(template.variable, "g"),
-      componentName
+      componentName,
     );
-  }
-  getTemplateFile(file: Uri, template: Template): string {
-    const relativePath = relative(
-      `${this.config?.dir}/${template.templateDir}`,
-      workspace.asRelativePath(file)
-    )
-      .split(path.sep)
-      .join("/");
-    return relativePath;
   }
 
   // ______ singleton _______
   private static instance: TemplateManager | null = null;
-  public static from(
-    context: ExtensionContext,
-    configLoader: ConfigLoader
-  ): TemplateManager {
+  public static from(configLoader: ConfigLoader): TemplateManager {
     if (this.instance === null) {
-      this.instance = new TemplateManager(context, configLoader);
+      this.instance = new TemplateManager(configLoader);
     }
-    this.instance.setContext(context);
     return this.instance;
   }
   // ____ END singleton _____

@@ -7,7 +7,6 @@
     "email": "abderrahmane.arache@gmail.com",
     "url": "https://github.com/Ar-mane"
   },
-  
   "version": "2.0.1",
   "engines": {
     "vscode": "^1.85.0"
@@ -54,16 +53,13 @@
   "license": "MIT",
   "scripts": {
     "vscode:prepublish": "yarn package",
-    "compile": "webpack --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
-    "watch": "webpack --watch --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
-    "package": "webpack --mode production --config ./build/node-extension.webpack.config.js",
-    "test-compile": "tsc -p ./",
-    "test-watch": "tsc -watch -p ./",
-    "pretest": "yarn test-compile && yarn lint",
+    "compile": "webpack --config webpack.config.js",
+    "watch": "yarn compile --watch",
+    "package": "webpack --mode production --config webpack.config.js",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
-    "vs-package": "vsce package --no-dependencies",
     "gs": "npx ts-node src/generate-schema.ts",
+    "vs-package": "vsce package --no-dependencies",
+    "format": "prettier . --write",
     "vs-publish": "vsce publish --no-dependencies"
   },
   "vsce": {
@@ -80,7 +76,7 @@
     "eslint": "^8.56.0",
     "file-url": "^4.0.0",
     "fs-extra": "^11.2.0",
-    "prettier": "2.8.0",
+    "prettier": "^3.2.5",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5",

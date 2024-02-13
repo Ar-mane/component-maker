@@ -1,32 +1,45 @@
 import { MC_MAIN_CMD } from "@/constants/Constants";
+import messages from "@/constants/Message.json";
+import { MainExtension } from "@/domain/MainExtension";
+import {
+  TerminateReason,
+  TerminationError,
+} from "@/exceptions/TerminationError";
+import { DialogManager } from "@/ui/DialogManager";
 import { log } from "@/utility/logger";
 import { ExtensionContext, Uri, commands } from "vscode";
-import { MainExtension } from "./domain/MainExtension";
-import { ExtensionTerminationError } from "./exceptions/ExtensionTerminationError";
-import { DialogManager } from "./ui/DialogManager";
-
-export function deactivate() {}
 
 export function activate(context: ExtensionContext) {
-  log("Component Maker up");
+  log(messages.extensionRunning);
 
-  const command = commands.registerCommand(MC_MAIN_CMD, (uri?: Uri) => {
+  const command = commands.registerCommand(MC_MAIN_CMD, async (uri?: Uri) => {
     try {
       if (!uri) {
-        throw ExtensionTerminationError;
+        throw new TerminationError(TerminateReason.NoUriProvided);
       }
-      MainExtension.from(context, uri).run();
-      DialogManager.showNotification(true);  //TODO: fix this
-    
+      // this is a good conf for now
+      // investigate using webview
+      // if (panel) {
+      //   panel.dispose();
+      // }
+      // panel = window.createWebviewPanel(
+      //   EXTENSION_NAME,
+      //   EXTENSION_NAME,
+      //   ViewColumn.Beside,
+      //   { enableScripts: true }
+      // );
+
+      // if (panel.visible) {
+      //   panel.reveal(ViewColumn.Beside, true);
+      // }
+
+      await MainExtension.from(context, uri).run();
+      DialogManager.displaySuccessNotification();
     } catch (error) {
-      if (error instanceof ExtensionTerminationError) {
-        //Exit
-        DialogManager.showNotification(false, error.reason); // not a good idea tho , using enum as arg s here
-      } else {
-        console.error(error);
-      }
+      DialogManager.displayWarning((error as TerminationError).reason);
     }
   });
-
   context.subscriptions.push(command);
 }
+
+export function deactivate() {}

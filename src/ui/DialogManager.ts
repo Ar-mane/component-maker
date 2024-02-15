@@ -19,7 +19,7 @@ export class DialogManager {
   static async promptCreateNewConfig() {
     const choice = await window.showInformationMessage(
       messages.noConfigFoundInfo,
-      ...[messages.noConfigActionCreate, messages.noConfigActionDefault]
+      ...[messages.noConfigActionCreate, messages.noConfigActionDefault],
     );
 
     return choice === messages.noConfigActionCreate;

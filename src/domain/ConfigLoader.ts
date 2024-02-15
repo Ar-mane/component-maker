@@ -26,7 +26,7 @@ export class ConfigLoader {
     this.destinationUri = getParentUri(uri);
     this.projectConfigFileUri = subFolderUri(
       this.workspaceUri,
-      CONFIG_FILE_NAME_IN_WORKSPACE
+      CONFIG_FILE_NAME_IN_WORKSPACE,
     );
   }
 
@@ -61,7 +61,7 @@ export class ConfigLoader {
     const allTemplateFilePaths = getAllTemplateFilePaths(config);
     const fileExistencePromises = allTemplateFilePaths.map(
       async (filePath) =>
-        await isFileExist(subFolderUri(this.getWorkspaceUri, filePath))
+        await isFileExist(subFolderUri(this.getWorkspaceUri, filePath)),
     );
     const allFilesExist = await Promise.all(fileExistencePromises);
     return allFilesExist.every((fileExists) => fileExists);
@@ -84,7 +84,7 @@ export class ConfigLoader {
       throw new TerminationError(
         isCreated
           ? TerminateReason.ConfigCreatedSuccessfully
-          : TerminateReason.ConfigCreationAborted
+          : TerminateReason.ConfigCreationAborted,
       );
     }
   };

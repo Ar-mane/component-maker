@@ -6,13 +6,13 @@
       "label": "📄 add component",
       "detail": "to create a complete next component",
       "templateDir": "component",
-      "variable": "_ComponentName_"
+      "variable": "_var_"
     },
     {
       "label": "🗃️ add page",
       "detail": "to create a Next page",
       "templateDir": "page",
-      "variable": "_ComponentName_",
+      "variable": "_var_",
       "destinationDir": "src/pages"
     }
   ]

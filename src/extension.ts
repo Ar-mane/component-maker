@@ -1,13 +1,10 @@
-import { MC_MAIN_CMD } from "@/constants/Constants";
-import messages from "@/constants/Message.json";
-import { MainExtension } from "@/domain/MainExtension";
-import {
-  TerminateReason,
-  TerminationError,
-} from "@/exceptions/TerminationError";
-import { DialogManager } from "@/ui/DialogManager";
-import { log } from "@/utility/logger";
-import { ExtensionContext, Uri, commands } from "vscode";
+import { MC_MAIN_CMD } from '@/constants/Constants';
+import messages from '@/constants/Message.json';
+import { MainExtension } from '@/domain/MainExtension';
+import { TerminateReason, TerminationError } from '@/exceptions/TerminationError';
+import { DialogManager } from '@/ui/DialogManager';
+import { log } from '@/utility/logger';
+import { ExtensionContext, Uri, commands } from 'vscode';
 
 export function activate(context: ExtensionContext) {
   log(messages.extensionRunning);

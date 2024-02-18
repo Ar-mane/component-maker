@@ -3,5 +3,14 @@
     "activityBar.background": "#2C265B",
     "titleBar.activeBackground": "#3D3580",
     "titleBar.activeForeground": "#FBFBFD"
-  }
+  },
+  "files.exclude": {
+    "out": false,
+    "dist": false
+  },
+  "search.exclude": {
+    "out": true,
+    "dist": true
+  },
+  "typescript.tsc.autoDetect": "off"
 }

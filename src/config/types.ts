@@ -85,12 +85,12 @@ export interface Effect {
   /**
    * Action to apply, like edit.
    */
-  action: "edit";
+  action: 'edit';
 
   /**
    * Edit strategy: start | end. Append a line at the start or the end of the file.
    */
-  concat: "start" | "end";
+  concat: 'start' | 'end';
 
   /**
    * Content to add during the edit action.

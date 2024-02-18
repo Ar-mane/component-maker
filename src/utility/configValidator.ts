@@ -1,9 +1,6 @@
-import { Config, Template } from "@/config/types";
+import { Config, Template } from '@/config/types';
 
-function getRelativePathsFromTemplate(
-  config: Config,
-  template: Template,
-): string[] {
+function getRelativePathsFromTemplate(config: Config, template: Template): string[] {
   const paths: string[] = [`${config.dir}/${template.templateDir}`];
 
   if (template.files) {

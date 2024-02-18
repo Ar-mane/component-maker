@@ -1,6 +1,8 @@
-import { ExtensionContext, Uri } from "vscode";
-import { ConfigLoader } from "./ConfigLoader";
-import { TemplateManager } from "./TemplateManager";
+import { ConfigLoader } from '@/domain/ConfigLoader';
+import { TemplateManager } from '@/domain/TemplateManager';
+import { Files } from '@/utility/Files';
+import { getComponentDestincation } from '@/utility/fileUtility';
+import { ExtensionContext, Uri } from 'vscode';
 
 export class MainExtension {
   private context: ExtensionContext;
@@ -16,8 +18,9 @@ export class MainExtension {
   }
 
   async run() {
-    const configLoader = ConfigLoader.from(this.uri);
-    await TemplateManager.from(configLoader).run();
+    const configLoader = ConfigLoader.instance();
+    const dest = Files.toRelative(getComponentDestincation(this.uri));
+    await TemplateManager.instance(configLoader, Files.toRelative(dest)).run();
   }
 
   // ______ singleton _______

@@ -1,11 +1,8 @@
-import { Config, Template } from "@/config/types";
-import { COMPONENT_NAME_REGEX } from "@/constants/Constants";
-import messages from "@/constants/Message.json";
-import {
-  TerminateReason,
-  TerminationError,
-} from "@/exceptions/TerminationError";
-import { window } from "vscode";
+import { Config, Template } from '@/config/types';
+import { COMPONENT_NAME_REGEX } from '@/constants/Constants';
+import messages from '@/constants/Message.json';
+import { TerminateReason, TerminationError } from '@/exceptions/TerminationError';
+import { window } from 'vscode';
 
 export class DialogManager {
   static async displayWarning(failReason: TerminateReason) {
@@ -19,7 +16,7 @@ export class DialogManager {
   static async promptCreateNewConfig() {
     const choice = await window.showInformationMessage(
       messages.noConfigFoundInfo,
-      ...[messages.noConfigActionCreate, messages.noConfigActionDefault]
+      ...[messages.noConfigActionCreate, messages.noConfigActionDefault],
     );
 
     return choice === messages.noConfigActionCreate;

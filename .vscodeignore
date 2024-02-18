@@ -3,12 +3,9 @@
 .DS_Store
 !dist/
 !icons/
-!src/
 !assets/
 !template/
 !*bundle.json
 !package.nls*.json
 !*.md
 !LICENSE
-!.integrity.json
-!.nsriignore

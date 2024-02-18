@@ -1,11 +1,11 @@
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 class Logger {
   private static instance: Logger;
   private logger: vscode.OutputChannel;
 
   private constructor() {
-    this.logger = vscode.window.createOutputChannel("[ Component Maker ]");
+    this.logger = vscode.window.createOutputChannel('[ Component Maker ]');
   }
 
   public static getInstance(): Logger {
@@ -18,7 +18,7 @@ class Logger {
 
   public log(message: any): void {
     let logString: string;
-    if (typeof message === "object" && message !== null) {
+    if (typeof message === 'object' && message !== null) {
       // Handle arrays separately
       if (Array.isArray(message)) {
         logString = JSON.stringify(message);

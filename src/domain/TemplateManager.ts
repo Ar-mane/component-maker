@@ -1,26 +1,23 @@
-import { Config, Template } from "@/config/types";
+import { Config, Template } from '@/config/types';
+import { ConfigLoader } from '@/domain/ConfigLoader';
+import { RelativePath } from '@/domain/models/types';
+import { TerminateReason, TerminationError } from '@/exceptions/TerminationError';
+import { DialogManager } from '@/ui/DialogManager';
+import { Files } from '@/utility/Files';
 import {
-  TerminateReason,
-  TerminationError,
-} from "@/exceptions/TerminationError";
-import { DialogManager } from "@/ui/DialogManager";
-import { subFolderUri } from "@/utility/Uri";
-import {
-  calculateRelativePathFromFile,
   getResolvedFileContent,
-  getTemplateFilesUris,
-  isFileExist,
-  writeFile,
-} from "@/utility/fileUtility";
-import { Uri } from "vscode";
-import { ConfigLoader } from "./ConfigLoader";
+  getTemplateFiles,
+  relativePathToTemplate,
+} from '@/utility/fileUtility';
 
 export class TemplateManager {
   private configLoader: ConfigLoader;
-  private config: Config | undefined;
+  private config!: Config;
+  private destination: string;
 
-  private constructor(configLoader: ConfigLoader) {
+  private constructor(configLoader: ConfigLoader, destination: RelativePath) {
     this.configLoader = configLoader;
+    this.destination = destination;
   }
 
   async run() {
@@ -30,78 +27,56 @@ export class TemplateManager {
     await this.processTemplate(template, componentName);
   }
 
+  // TODO: NEEDS REWORK
   private async processTemplate(template: Template, componentName: string) {
-    const filesURIs = await getTemplateFilesUris(this.config!, template);
+    const files = await getTemplateFiles(this.config, template);
 
-    filesURIs.map(async (file) => {
-      var componentContent = await getResolvedFileContent(
-        template,
-        file,
-        componentName,
-      );
-
-      const relativePath = calculateRelativePathFromFile(
-        this.config!,
-        template,
-        file,
-      );
-      const folderTarget = this.determineTargetFolder(relativePath, template);
-
-      // TODO , check this , maybe to be somewere else
-
-      const resolvedPath = this.resolvePath(
-        relativePath,
-        template,
-        componentName,
-      );
-      const target = subFolderUri(folderTarget, resolvedPath);
-
-      const resolvedTarget = this.resolvePath(
-        target.fsPath,
-        template,
-        componentName,
-      );
-      if (await isFileExist(Uri.file(resolvedTarget))) {
-        throw new TerminationError(TerminateReason.ComponentAlreadyExists);
-      }
-
-      await writeFile(Uri.file(resolvedTarget), componentContent);
-    });
-  }
-
-  determineTargetFolder(file: string, template: Template) {
-    const specialFile = template.files?.find((e) => e.sourceFile === file);
-    if (specialFile) {
-      return subFolderUri(
-        this.configLoader.getWorkspaceUri,
-        specialFile.destinationDir,
-      );
-    }
-
-    if (template.destinationDir) {
-      return subFolderUri(
-        this.configLoader.getWorkspaceUri,
-        template.destinationDir,
-      );
-    }
-
-    return this.configLoader.destinationUri;
-  }
-
-  resolvePath(relativePath: string, template: Template, componentName: string) {
-    return relativePath.replace(
-      new RegExp(template.variable, "g"),
-      componentName,
+    await Promise.all(
+      files.map(async (file) => {
+        return await this.handleFile(template, componentName, file);
+      }),
     );
   }
 
-  // ______ singleton _______
-  private static instance: TemplateManager | null = null;
-  public static from(configLoader: ConfigLoader): TemplateManager {
-    if (this.instance === null) {
-      this.instance = new TemplateManager(configLoader);
+  async handleFile(template: Template, componentName: string, file: string) {
+    const componentContent = await getResolvedFileContent(template, file, componentName);
+
+    const relativePath = relativePathToTemplate(this.config, template, file);
+    const resolvedPath = this.resolvePath(relativePath, template, componentName);
+    const folderTarget = this.determineTargetFolder(relativePath, template);
+    const target = Files.join(folderTarget, resolvedPath);
+
+    const resolvedTarget = this.resolvePath(target, template, componentName);
+
+    if (await Files.exist(resolvedTarget)) {
+      throw new TerminationError(TerminateReason.ComponentAlreadyExists);
     }
-    return this.instance;
+
+    await Files.writeFile(resolvedTarget, componentContent);
+  }
+
+  determineTargetFolder(file: string, template: Template) {
+    const specialFile = template.files?.find((e) => e.sourceFile === file); // check not always true , compare path if relative
+    if (specialFile) {
+      return specialFile.destinationDir;
+    }
+    if (template.destinationDir) {
+      return template.destinationDir;
+    }
+    return this.destination;
+  }
+
+  resolvePath(relativePath: string, template: Template, componentName: string) {
+    return relativePath.replace(new RegExp(template.variable, 'g'), componentName);
+  }
+
+  // ______ singleton _______
+  private static _instance: TemplateManager | null = null;
+  public static instance(configLoader: ConfigLoader, destination: RelativePath): TemplateManager {
+    if (this._instance === null) {
+      this._instance = new TemplateManager(configLoader, destination);
+    }
+    return this._instance;
   }
   // ____ END singleton _____
 }

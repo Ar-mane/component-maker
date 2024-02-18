@@ -1,6 +1,3 @@
 {
-  "recommendations": [
-    "github.vscode-github-actions",
-    "amodio.tsl-problem-matcher"
-  ]
+  "recommendations": ["github.vscode-github-actions", "amodio.tsl-problem-matcher"]
 }

@@ -1,4 +1,5 @@
 {
+  "version": "2.0.2",
   "name": "component-maker",
   "displayName": "Component Maker",
   "description": "Generates necessary files for new components, does not depend on any language, framework",
@@ -7,7 +8,6 @@
     "email": "abderrahmane.arache@gmail.com",
     "url": "https://github.com/Ar-mane"
   },
-  "version": "2.0.1",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -52,15 +52,13 @@
   "homepage": "https://component-maker.vercel.app/",
   "license": "MIT",
   "scripts": {
-    "vscode:prepublish": "yarn package",
-    "compile": "webpack --config webpack.config.js",
-    "watch": "yarn compile --watch",
-    "package": "webpack --mode production --config webpack.config.js",
-    "lint": "eslint src --ext ts",
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
     "gs": "npx ts-node src/generate-schema.ts",
-    "vs-package": "vsce package --no-dependencies",
     "format": "prettier . --write",
-    "vs-publish": "vsce publish --no-dependencies"
+    "vs-package": "vsce package --no-dependencies"
   },
   "vsce": {
     "dependencies": false,

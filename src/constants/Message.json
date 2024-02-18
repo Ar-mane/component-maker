@@ -15,7 +15,8 @@
     "ComponentAlreadyExists": "This component already exists. Please choose another name or location directory.",
     "NoUriProvided": "Please select where to create the component in your file explorer.",
     "ConfigCreationAborted": "Operation canceled.",
-    "TemplateCompatibilityFailed": "Incompatibility detected: Your configuration and templates do not match."
+    "NoWorkSpace": "No workspace.",
+    "TemplateCompatibilityFailed": "Incompatibility detected: some paths are missing, your configuration and templates do not match."
   },
   "ComponentCreatedSuccessfully": "Component Created"
 }

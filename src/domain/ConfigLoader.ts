@@ -1,56 +1,25 @@
-import { Config } from "@/config/types";
-import {
-  CONFIG_FILE_NAME_IN_WORKSPACE,
-  EXTENSION_ID,
-} from "@/constants/Constants";
-import {
-  TerminateReason,
-  TerminationError,
-} from "@/exceptions/TerminationError";
-import { DialogManager } from "@/ui/DialogManager";
-import { rootUri, subFolderUri } from "@/utility/Uri";
-import { getAllTemplateFilePaths } from "@/utility/configValidator";
-import { getParentUri, isFileExist, readFile } from "@/utility/fileUtility";
-import { log } from "@/utility/logger";
-import * as fs from "fs-extra";
-import * as path from "node:path";
-import { Uri, extensions, window, workspace } from "vscode";
+import { Config } from '@/config/types';
+import { CONFIG_FILE_NAME_IN_WORKSPACE, EXTENSION_ID } from '@/constants/Constants';
+import { TerminateReason, TerminationError } from '@/exceptions/TerminationError';
+import { DialogManager } from '@/ui/DialogManager';
+import { Files } from '@/utility/Files';
+import { getAllTemplateFilePaths } from '@/utility/configValidator';
+import { extensions, window, workspace } from 'vscode';
 
 export class ConfigLoader {
-  projectConfigFileUri: Uri;
-  workspaceUri: Uri;
-  destinationUri: Uri;
-
-  private constructor(uri: Uri) {
-    this.workspaceUri = rootUri();
-    this.destinationUri = getParentUri(uri);
-    this.projectConfigFileUri = subFolderUri(
-      this.workspaceUri,
-      CONFIG_FILE_NAME_IN_WORKSPACE,
-    );
-  }
-
-  private async loadConfigFromConfigFile(): Promise<Config> {
-    const readStr = await readFile(this.projectConfigFileUri);
+  private async readConfig(): Promise<Config> {
+    const readStr = await Files.readFile(CONFIG_FILE_NAME_IN_WORKSPACE);
     return JSON.parse(readStr) as Config;
   }
   private async initializeEmptyTemplate() {
-    const templateFolder = this.getTemplateFolderFromExtension();
-    await fs.copy(templateFolder, this.workspaceUri.fsPath, {
-      overwrite: true,
-    });
-  }
-
-  private getTemplateFolderFromExtension() {
     const extensionPath = extensions.getExtension(EXTENSION_ID)?.extensionPath;
-    const templateFolder = path.join(extensionPath || "", "template");
-    return templateFolder;
+    Files.copyFolder(Files.absolute(extensionPath!, 'template'));
   }
 
   private async handleTemplateFolderCloning() {
     if (await DialogManager.promptCreateNewConfig()) {
       await this.initializeEmptyTemplate();
-      const doc = await workspace.openTextDocument(this.projectConfigFileUri);
+      const doc = await workspace.openTextDocument(CONFIG_FILE_NAME_IN_WORKSPACE);
       await window.showTextDocument(doc);
       return true;
     }
@@ -59,21 +28,19 @@ export class ConfigLoader {
 
   private async checkTemplateConfigCompatibility(config: Config) {
     const allTemplateFilePaths = getAllTemplateFilePaths(config);
-    const fileExistencePromises = allTemplateFilePaths.map(
-      async (filePath) =>
-        await isFileExist(subFolderUri(this.getWorkspaceUri, filePath)),
+
+    const allFilesExist = await Promise.all(
+      allTemplateFilePaths.map(async (e) => await Files.exist(e)),
     );
-    const allFilesExist = await Promise.all(fileExistencePromises);
-    return allFilesExist.every((fileExists) => fileExists);
+    return allFilesExist.every(Boolean);
   }
 
   getConfig = async (): Promise<Config> => {
-    const fileExist = await isFileExist(this.projectConfigFileUri);
+    const fileExist = await Files.exist(CONFIG_FILE_NAME_IN_WORKSPACE);
 
     if (fileExist) {
-      const config = await this.loadConfigFromConfigFile();
-      const allFilesMatchTemplate =
-        await this.checkTemplateConfigCompatibility(config);
+      const config = await this.readConfig();
+      const allFilesMatchTemplate = await this.checkTemplateConfigCompatibility(config);
       if (allFilesMatchTemplate) {
         return config;
       } else {
@@ -89,17 +56,13 @@ export class ConfigLoader {
     }
   };
 
-  public get getWorkspaceUri(): Uri {
-    return this.workspaceUri;
-  }
-
   // ______ singleton _______
-  private static instance: ConfigLoader | null = null;
-  public static from(destinationUri: Uri): ConfigLoader {
-    if (this.instance === null) {
-      this.instance = new ConfigLoader(destinationUri);
+  private static _instance: ConfigLoader | null = null;
+  public static instance(): ConfigLoader {
+    if (this._instance === null) {
+      this._instance = new ConfigLoader();
     }
-    return this.instance;
+    return this._instance;
   }
   // ____ END singleton _____
 }

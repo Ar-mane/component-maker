@@ -20,7 +20,7 @@ export class MainExtension {
   async run() {
     const configLoader = ConfigLoader.instance();
     const dest = Files.toRelative(getComponentDestincation(this.uri));
-    await TemplateManager.instance(configLoader, Files.toRelative(dest)).run();
+    await TemplateManager.instance(configLoader, dest).run();
   }
 
   // ______ singleton _______

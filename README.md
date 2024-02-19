@@ -119,9 +119,3 @@ export default _ComponentName_;
 ## Conclusion
 
 Component Maker is a powerful extension designed to streamline your component creation process. Customize it to match your project's needs and enjoy a more efficient development workflow.
-
----
-
-<br /> <br /> <br /> <br />
-<br /> <br /> <br /> <br />
-![](https://www.crossed-flag-pins.com/animated-flag-gif/gifs/Morocco_120-animated-flag-gifs.gif) done with 💙, Armane

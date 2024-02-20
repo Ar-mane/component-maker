@@ -2,10 +2,12 @@ import * as vscode from 'vscode';
 
 class Logger {
   private static instance: Logger;
-  private logger: vscode.OutputChannel;
+  private logger?: vscode.OutputChannel;
 
   private constructor() {
-    this.logger = vscode.window.createOutputChannel('[ Component Maker ]');
+    if (process.env.NODE_ENV === 'development') {
+      this.logger = vscode.window.createOutputChannel('[ Component Maker ]');
+    }
   }
 
   public static getInstance(): Logger {
@@ -26,11 +28,14 @@ class Logger {
         logString = JSON.stringify(message, null, 2); // Add spacing for better readability
       }
     } else {
-      // For string, number, and boolean, simply convert to string
       logString = String(message);
     }
-    this.logger.appendLine(logString);
-    this.logger.show();
+    this.logMessage(logString);
+  }
+
+  private logMessage(logString: string) {
+    this.logger?.appendLine(logString);
+    this.logger?.show();
   }
 }
 export function log(message: any) {

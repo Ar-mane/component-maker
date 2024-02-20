@@ -7,33 +7,22 @@ import { log } from '@/utility/logger';
 import { ExtensionContext, Uri, commands } from 'vscode';
 
 export function activate(context: ExtensionContext) {
-  log(messages.extensionRunning);
-
   const command = commands.registerCommand(MC_MAIN_CMD, async (uri?: Uri) => {
+    log(messages.extensionRunning);
+
     try {
       if (!uri) {
         throw new TerminationError(TerminateReason.NoUriProvided);
       }
-      // this is a good conf for now
-      // investigate using webview
-      // if (panel) {
-      //   panel.dispose();
-      // }
-      // panel = window.createWebviewPanel(
-      //   EXTENSION_NAME,
-      //   EXTENSION_NAME,
-      //   ViewColumn.Beside,
-      //   { enableScripts: true }
-      // );
-
-      // if (panel.visible) {
-      //   panel.reveal(ViewColumn.Beside, true);
-      // }
 
       await MainExtension.from(context, uri).run();
       DialogManager.displaySuccessNotification();
     } catch (error) {
-      DialogManager.displayWarning((error as TerminationError).reason);
+      if (error instanceof TerminationError) {
+        DialogManager.displayWarning((error as TerminationError).reason);
+      } else {
+        log((error as any).message);
+      }
     }
   });
   context.subscriptions.push(command);

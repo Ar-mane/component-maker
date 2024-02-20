@@ -41,12 +41,16 @@ export class TemplateManager {
   async handleFile(template: Template, componentName: string, file: string) {
     const componentContent = await getResolvedFileContent(template, file, componentName);
 
-    const relativePath = relativePathToTemplate(this.config, template, file);
-    const resolvedPath = this.resolvePath(relativePath, template, componentName);
-    const folderTarget = this.determineTargetFolder(relativePath, template);
-    const target = Files.join(folderTarget, resolvedPath);
+    const relativePathSource = relativePathToTemplate(this.config, template, file);
+    const targetFolder = this.determineTargetFolder(relativePathSource, template);
 
-    const resolvedTarget = this.resolvePath(target, template, componentName);
+    const resolvedRelativePathSource = this.resolvePath(
+      relativePathSource,
+      template,
+      componentName,
+    );
+
+    const resolvedTarget = Files.join(targetFolder, resolvedRelativePathSource);
 
     if (await Files.exist(resolvedTarget)) {
       throw new TerminationError(TerminateReason.ComponentAlreadyExists);

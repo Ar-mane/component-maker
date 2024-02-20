@@ -24,7 +24,7 @@ export class DialogManager {
 
   static async promptTemplateSelection(config: Config): Promise<Template> {
     const selection = await window.showQuickPick(config.templates, {
-      ignoreFocusOut: false,
+      ignoreFocusOut: true,
     });
 
     if (!selection) {

@@ -1,0 +1,47 @@
+:root {
+  --vp-c-indigo-1: #f4511e;
+  --vp-c-indigo-2: #e0e0e0;
+  --vp-c-indigo-3: #f4511e;
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-image-filter: blur(40px);
+  
+  /*  to update for title  */
+  --vp-home-hero-name-background: linear-gradient(120deg, #f4511e 20%, #6680f5);
+  --vp-home-hero-image-background-image: linear-gradient(180deg, transparent 80%, #6680f5 20%);
+
+
+
+
+  /* 
+  --vp-c-gray-1: #dddde3;
+  --vp-c-gray-2: #e4e4e9;
+  --vp-c-gray-3: #ebebef;
+  --vp-c-gray-soft: rgba(142, 150, 170, 0.14); 
+
+  --vp-c-indigo-soft: rgba(100, 108, 255, 0.14);
+
+  --vp-c-purple-1: #6f42c1;
+  --vp-c-purple-2: #7e4cc9;
+  --vp-c-purple-3: #8e5cd9;
+  --vp-c-purple-soft: rgba(159, 122, 234, 0.14);
+
+  --vp-c-green-1: #18794e;
+  --vp-c-green-2: #299764;
+  --vp-c-green-3: #30a46c;
+  --vp-c-green-soft: rgba(16, 185, 129, 0.14);
+
+  --vp-c-yellow-1: #915930;
+  --vp-c-yellow-2: #946300;
+  --vp-c-yellow-3: #9f6a00;
+  --vp-c-yellow-soft: rgba(234, 179, 8, 0.14);
+
+  --vp-c-red-1: #b8272c;
+  --vp-c-red-2: #d5393e;
+  --vp-c-red-3: #e0575b;
+  --vp-c-red-soft: rgba(244, 63, 94, 0.14);
+
+  --vp-c-sponsor: #db2777;
+  */
+} 
+ 

@@ -13,12 +13,13 @@ export class ConfigLoader {
   }
   private async initializeEmptyTemplate() {
     const extensionPath = extensions.getExtension(EXTENSION_ID)?.extensionPath;
-    Files.copyFolder(Files.absolute(extensionPath!, 'template'));
+    await Files.copyFolder(Files.absolute(extensionPath!, 'template'));
   }
 
   private async handleTemplateFolderCloning() {
     if (await DialogManager.promptCreateNewConfig()) {
       await this.initializeEmptyTemplate();
+      // TODO: this doesnt work  , file not found 
       const doc = await workspace.openTextDocument(CONFIG_FILE_NAME_IN_WORKSPACE);
       await window.showTextDocument(doc);
       return true;

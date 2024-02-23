@@ -5,7 +5,6 @@ export default defineConfig({
   title: "Component Maker",
   description: "Simplify component generation and boost productivity with Component Maker.",
   srcDir: 'src',
-  outDir: 'build',
   assetsDir: 'public',
   head: [
     ['link', { rel: "icon", type: "image/svg",   href: "icon.svg" }],

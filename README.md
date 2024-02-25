@@ -23,7 +23,7 @@
 Explore our documentation for more information on how to use Component Maker to speed up your development workflow. Detailed guides and API references are available to help you get started:
 
 <p align="center">
-  <a href="https://component-maker.vercel.com" target="_blank" rel="noopener noreferrer">
+  <a href="https://component-maker.vercel.app" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/Read%20the-Docs-42b983.svg?style=for-the-badge&logo=vercel" alt="Read the Docs">
   </a>
 </p>

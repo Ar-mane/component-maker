@@ -2,33 +2,28 @@
   "version": "2.0.41",
   "name": "component-maker",
   "displayName": "Component Maker",
+  "publisher": "Ar-mane",
+  "icon": "assets/images/icon.png",
+  "license": "MIT",
   "description": "Generates necessary files for new components, does not depend on any language, framework",
+  "homepage": "https://component-maker.vercel.app/",
   "author": {
     "name": "Ar-mane",
     "email": "abderrahmane.arache@gmail.com",
     "url": "https://github.com/Ar-mane"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ar-mane/component-maker"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "main": "./dist/extension.js",
   "engines": {
     "vscode": "^1.85.0"
   },
-  "categories": [
-    "Other"
-  ],
-  "keywords": [
-    "react",
-    "next",
-    "vite",
-    "plop",
-    "plop",
-    "component",
-    "maker",
-    "generator",
-    "javascript",
-    "typescript"
-  ],
-  "publisher": "Ar-mane",
-  "main": "./dist/extension.js",
-  "icon": "assets/images/icon.png",
   "contributes": {
     "commands": [
       {
@@ -45,12 +40,6 @@
       ]
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Ar-mane/component-maker"
-  },
-  "homepage": "https://component-maker.vercel.app/",
-  "license": "MIT",
   "scripts": {
     "vscode:prepublish": "yarn run package",
     "compile": "webpack",
@@ -59,10 +48,6 @@
     "gs": "npx ts-node src/generate-schema.ts",
     "format": "prettier . --write",
     "vs-package": "vsce package --no-dependencies"
-  },
-  "vsce": {
-    "dependencies": false,
-    "useYarn": true
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
@@ -82,5 +67,30 @@
     "vscode-test": "^1.6.1",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "vsce": {
+    "dependencies": false,
+    "useYarn": true
+  },
+  "keywords": [
+    "react",
+    "next",
+    "vite",
+    "plop",
+    "component",
+    "maker",
+    "generator",
+    "javascript",
+    "typescript",
+    "component generator",
+    "template customization",
+    "development tools",
+    "code scaffolding",
+    "file structure automation",
+    "UI component builder",
+    "frontend development",
+    "custom templates",
+    "agile development",
+    "cross-framework"
+  ]
 }

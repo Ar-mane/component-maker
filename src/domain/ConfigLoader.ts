@@ -19,7 +19,7 @@ export class ConfigLoader {
   private async handleTemplateFolderCloning() {
     if (await DialogManager.promptCreateNewConfig()) {
       await this.initializeEmptyTemplate();
-      // TODO: this doesnt work  , file not found 
+      // TODO: this doesnt work  , file not found
       const doc = await workspace.openTextDocument(CONFIG_FILE_NAME_IN_WORKSPACE);
       await window.showTextDocument(doc);
       return true;

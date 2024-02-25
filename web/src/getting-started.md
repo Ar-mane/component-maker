@@ -1,10 +1,9 @@
-# Why Component Maker?
+# getting started
+## Component Maker: Elevate Your Development Workflow
 
-Component Maker is a versatile VS Code extension designed to simplify the process of generating new component files using custom templates. Whether you're working with React, Vue, Angular, or any other framework, Component Maker streamlines your workflow, saving you time and effort in creating and maintaining components.
+The Component Maker extension is designed to enhance the component creation process in Visual Studio Code, offering guidance on installation, initial setup, and template customization to fit individual workflows. It provides versatile support for various frameworks and languages, enabling developers to efficiently generate components across different stacks, thereby improving flexibility and productivity.
 
-With Component Maker, you can:
-- Generate components with a simple right-click, directly in the file editor or explorer.
-- Customize templates to match your project's requirements, allowing for flexibility in your file structure.
-- Boost productivity by accelerating the component creation process, ultimately leading to faster development cycles.
+### Key Features
+* Seamless Component Generation: Forget the tedious manual setup. Right-click in the file editor or explorer, select 📐Make Component, and watch as your component springs to life, ready for development.
 
-If you're tired of manually creating components and want to supercharge your development workflow, Component Maker is the tool for you.
+* Fully Customizable Templates: Your project, your rules. Component Maker allows you to craft and customize templates to fit the unique structure of your project. Inspired by the simplicity of plop, it provides a flexible foundation for your file architecture, enabling you to maintain consistency and speed up the development process.

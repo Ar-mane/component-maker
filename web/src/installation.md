@@ -1,5 +1,4 @@
 # Installation
-
 ## VS Code
 
 To start using Component Maker in your VS Code environment, follow these simple steps:

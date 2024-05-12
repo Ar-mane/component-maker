@@ -15,7 +15,7 @@ export function activate(context: ExtensionContext) {
         throw new TerminationError(TerminateReason.NoUriProvided);
       }
 
-      await MainExtension.from(context, uri).run();
+      await MainExtension.from(uri).run();
       DialogManager.displaySuccessNotification();
     } catch (error) {
       if (error instanceof TerminationError) {
@@ -28,4 +28,4 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(command);
 }
 
-export function deactivate() {}
+export function deactivate() { }

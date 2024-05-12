@@ -13,14 +13,15 @@ import {
 export class TemplateManager {
   private configLoader: ConfigLoader;
   private config!: Config;
-  private destination: string;
+  private destination!: string;
 
-  private constructor(configLoader: ConfigLoader, destination: RelativePath) {
+  private constructor(configLoader: ConfigLoader) {
     this.configLoader = configLoader;
-    this.destination = destination;
   }
 
-  async run() {
+
+  async run(destination: RelativePath) {
+    this.destination = destination;
     this.config = await this.configLoader.getConfig();
     const template = await DialogManager.promptTemplateSelection(this.config);
     const componentName = await DialogManager.promptComponentName();
@@ -76,9 +77,9 @@ export class TemplateManager {
 
   // ______ singleton _______
   private static _instance: TemplateManager | null = null;
-  public static instance(configLoader: ConfigLoader, destination: RelativePath): TemplateManager {
+  public static instance(configLoader: ConfigLoader): TemplateManager {
     if (this._instance === null) {
-      this._instance = new TemplateManager(configLoader, destination);
+      this._instance = new TemplateManager(configLoader);
     }
     return this._instance;
   }

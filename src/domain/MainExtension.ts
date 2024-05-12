@@ -2,34 +2,33 @@ import { ConfigLoader } from '@/domain/ConfigLoader';
 import { TemplateManager } from '@/domain/TemplateManager';
 import { Files } from '@/utility/Files';
 import { getComponentDestincation } from '@/utility/fileUtility';
-import { ExtensionContext, Uri } from 'vscode';
+import { Uri } from 'vscode';
 
 export class MainExtension {
-  private context: ExtensionContext;
   private uri: Uri;
 
-  private constructor(context: ExtensionContext, uri: Uri) {
-    this.context = context;
+  private constructor(uri: Uri) {
+
     this.uri = uri;
   }
 
-  private setContext(context: ExtensionContext) {
-    this.context = context;
+  private setUri(uri: Uri) {
+    this.uri = uri;
   }
 
   async run() {
     const configLoader = ConfigLoader.instance();
     const dest = Files.toRelative(getComponentDestincation(this.uri));
-    await TemplateManager.instance(configLoader, dest).run();
+    await TemplateManager.instance(configLoader).run(dest);
   }
 
   // ______ singleton _______
   private static instance: MainExtension | null = null;
-  public static from(context: ExtensionContext, uri: Uri): MainExtension {
+  public static from(uri: Uri): MainExtension {
     if (this.instance === null) {
-      this.instance = new MainExtension(context, uri);
+      this.instance = new MainExtension(uri);
     }
-    this.instance.setContext(context);
+    this.instance.setUri(uri);
     return this.instance;
   }
   // ____ END singleton _____

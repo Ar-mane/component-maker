@@ -38,4 +38,8 @@ If you find Component Maker useful, consider supporting the project by buying th
   <a href="https://www.buymeacoffee.com/armanearache" target="_blank">
     <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" >
   </a>
+  <a href="https://ko-fi.com/armanearache" target="_blank">
+    <img src="https://assets-global.website-files.com/5c14e387dab576fe667689cf/64f1a9ddd0246590df69ea15_kofi_long_button_dark%25402x-p-500.png" alt="Buy Me A Coffee" style="height: 37px !important;width: auto !important;" >
+  </a>
+  
 </p>

@@ -24,7 +24,7 @@ Component Maker integrates seamlessly into your VS Code environment, offering an
 
     ![](/images/template.png)
 
-6. **Auto generation config**: For first-time users without an existing configuration in their workspace, a dialog will pop up at the bottom, asking for permission to automatically set up the workspace. This auto-setup process includes creating a template folder and generating a .cmrc.json configuration file.
+6. **Auto generation config**: For first-time users without an existing configuration in their workspace, a dialog will pop up at the bottom, asking for permission to automatically set up the workspace. This auto-setup process includes creating a template folder and generating a `.cmrc` configuration file.
 
     ![](/images/no_template.png)
 

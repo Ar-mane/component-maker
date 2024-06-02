@@ -1,6 +1,6 @@
-#  Configuring `.cmrc.json`
+#  Configuring `.cmrc`
 
-**.cmrc.json** stands for **Component Maker Run Command**. It is automatically generated and should be placed at the root of your workspace. This file acts as the main entry for the extension, containing all the configurations for your templates.
+**.cmrc** stands for **Component Maker Run Command**. It is automatically generated and should be placed at the root of your workspace. This file acts as the main entry for the extension, containing all the configurations for your templates.
 
 ### Path Specifications
 
@@ -18,13 +18,13 @@ This distinction ensures that Component Maker can accurately locate your templat
 
 ### Purpose and Importance
 
-- **Central Configuration Hub**: `.cmrc.json` serves as the centralized location for managing your template configurations, simplifying the process of customizing and updating your component generation settings.
+- **Central Configuration Hub**: `.cmrc` serves as the centralized location for managing your template configurations, simplifying the process of customizing and updating your component generation settings.
 
 - **Flexibility and Customization**: This configuration file allows for the definition of various templates that cater to different needs within your project, ensuring that the generated components adhere to your project's structure and coding guidelines.
 
 ## Configuration Structure
 
-The `.cmrc.json` file typically includes the following key elements:
+The `.cmrc` file typically includes the following key elements:
 
 #### `Config`
 
@@ -70,7 +70,7 @@ The `.cmrc.json` file typically includes the following key elements:
 Below is a configuration example for generating two **react/Next js** components using templates:
 ```json
 {
-  "$schema": "https://component-maker.vercel.app/schema.json",
+  "$schema": "https://cm.armane.dev/schema.json",
   "dir": ".cm_templates",
   "templates": [
     {
@@ -97,7 +97,7 @@ To add a new template, you'll want to first create a template directory within `
 1. **Create a New Directory**: Inside `.cm_templates`, create a new directory named `service`.
 2. **Add Template Files**: Within the `service` directory, add your template files. For instance, you might have `serviceName.service.ts` for defining the service structure.
 
-Here’s how you can update your `.cmrc.json` to include this new template:
+Here’s how you can update your `.cmrc` to include this new template:
 
 ```json
 {

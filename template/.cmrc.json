@@ -1,5 +1,5 @@
 {
-  "$schema": "https://component-maker.vercel.app/schema.json",
+  "$schema": "https://cm.armane.dev/schema.json",
   "dir": ".cm_templates",
   "templates": [
     {

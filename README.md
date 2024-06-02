@@ -23,8 +23,8 @@
 Explore our documentation for more information on how to use Component Maker to speed up your development workflow. Detailed guides and API references are available to help you get started:
 
 <p align="center">
-  <a href="https://component-maker.vercel.app" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/Read%20the-Docs-42b983.svg?style=for-the-badge&logo=vercel" alt="Read the Docs">
+  <a href="https://cm.armane.dev" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Read%20the-Docs-42b983.svg?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMzIgMzIiCiAgICBzaGFwZS1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiI+CiAgICA8dGl0bGU+ZmlsZV90eXBlX2NtcmM8L3RpdGxlPgogICAgPHBhdGgKICAgICAgICBkPSJNMTUuNzU5MDU5LDEuMTczMjM1TDMuMDg3MDY0LDE2LjE0NjY1NEwxNS43NTkwNTksMzEuMTY2NDQ5bDYuNzUyMjYtOC4wNHYtNi40Nzg4NjdsLTYuNzUyMjYsOC41MDk0MTQtNy40MDg0My05LjAxMDM0Mmw3LjQwODQzLTguNzU2MjI0bDQuNzYzNDIyLDUuMjA3MjY0bDIuMzQ3NTExLTMuMDc5ODk4LTcuMTEwOTMzLTguMzQ0NTYxWiIKICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgxLjE3NjYgMCAwIDEtMi41NDIxMDktLjE0NjY1NCkiIGZpbGw9IiNmNDUxMWUiIHN0cm9rZS13aWR0aD0iMC4yIiAvPgogICAgPHBhdGgKICAgICAgICBkPSJNOS4yNzE3NjUsMTYuMDQ4ODgybDYuNDQ0MzItNy4zMTEwOTdsNS4wMjU3NDIsNS4xMDA0NWwzLjAxMzA4Mi0zLjc2OTU1OGw1LjM5ODU2NCw1Ljk4MDIwNS01LjM5ODU2NCw2LjAzOTc5NXYtNy43MTY1NDRsLTUuMDE0MTcyLDUuNzE5NTIzLTIuNTk0MDgzLTUuNzE5NTIzLS40MzA1NjksOS4xMjgyOTYtNi40NDQzMi03LjQ1MTU0N1oiCiAgICAgICAgdHJhbnNmb3JtPSJtYXRyaXgoMS4xMTUxODcgMCAwIDEtMS41MjYzNzQtLjA2ODg4MikiIGZpbGw9IiNlMGUwZTAiIHN0cm9rZS13aWR0aD0iMC4yIiAvPgo8L3N2Zz4=" alt="Read the Docs">
   </a>
 </p>
 

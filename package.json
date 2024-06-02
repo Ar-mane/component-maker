@@ -1,12 +1,12 @@
 {
-  "version": "2.0.42",
+  "version": "2.0.43",
   "name": "component-maker",
   "displayName": "Component Maker",
   "publisher": "Ar-mane",
   "icon": "assets/images/icon.png",
   "license": "MIT",
   "description": "Generates necessary files for new components, does not depend on any language, framework",
-  "homepage": "https://component-maker.vercel.app/",
+  "homepage": "https://cm.armane.dev/",
   "author": {
     "name": "Ar-mane",
     "email": "abderrahmane.arache@gmail.com",
